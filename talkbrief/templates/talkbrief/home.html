@@ -1,0 +1,56 @@
+{% extends "talkbrief/base.html" %}
+
+{% block title %}TalkBrief-Home{% endblock %}
+
+{% block content %}
+<h2>Welcome to Home Page</h2>
+<!-- <h2>Upload Audio/Video or Enter URL</h2>
+    <form action="{% url 'transcribe' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="audio_video_file" accept="audio/*,video/*">
+        <br><br>
+        Or enter URL:
+        <input type="text" name="url">
+        <br><br>
+        <button type="submit">Submit</button>
+    </form> -->
+
+
+<!-- <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="text" name="av_url" placeholder="Enter URL here">
+     Or 
+    <input type="file" name="file">
+    <button type="submit">Transcribe</button>
+</form> -->
+
+<form action="{% url 'transcribe' %}" method="post" enctype="multipart/form-data">
+
+    {% csrf_token %}
+    <label for="av_url">Enter Audio/Video URL:</label>
+    <input type="text" id="av_url" name="av_url" placeholder="Paste URL here">
+    <br><br>
+    <label for="file_upload">Upload File:</label>
+    <input type="file" id="file_upload" name="file">
+    <br><br>
+    <input type="submit" value="Transcribe">
+</form>
+{% endblock %}
+
+<!-- home.html -->
+<!-- <form method="post" enctype="multipart/form-data" action="{% url 'transcribe' %}>
+    {% csrf_token %}
+    <label for="av_url">Enter URL:</label>
+    <input type="text" id="av_url" name="av_url" placeholder="Paste URL here">
+    <br><br>
+    <h3>OR</h3>
+    <br>
+    <label for="file_upload">Upload Audio/Video File:</label>
+    <input type="file" id="file_upload" name="file">
+    <br><br>
+    <input type="submit" value="Transcribe">
+</form> -->
+
+
+
+

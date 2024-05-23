@@ -1,0 +1,44 @@
+{% extends "talkbrief/base.html" %}
+
+{% block title %}About Us{% endblock %}
+
+{% block content %}
+<body>
+    <!-- Header goes here -->
+
+    <section id="organization-info">
+        <div class="container">
+            <img src="path/to/your/organization-picture.jpg" alt="Organization Picture" class="organization-image">
+            <h1>Your Organization Name</h1>
+            <p>A brief description of your organization.</p>
+        </div>
+    </section>
+
+    <section id="team-members">
+        <div class="container">
+            <h2>Main Team Members</h2>
+            <div class="member">
+                <img src="path/to/member1-picture.jpg" alt="Member 1">
+                <h3>Member 1 Name</h3>
+                <p>Role and responsibilities of Member 1.</p>
+            </div>
+            <div class="member">
+                <img src="path/to/member2-picture.jpg" alt="Member 2">
+                <h3>Member 2 Name</h3>
+                <p>Role and responsibilities of Member 2.</p>
+            </div>
+            <div class="member">
+                <img src="path/to/member3-picture.jpg" alt="Member 3">
+                <h3>Member 3 Name</h3>
+                <p>Role and responsibilities of Member 3.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="project-challenges">
+        <div class="container">
+            <h2>Overcoming Challenges</h2>
+            <p>Describe the challenges faced during the project and how they were overcome. Include any significant milestones or achievements along the way.</p>
+        </div>
+    </section>
+{% endblock %}

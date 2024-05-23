@@ -1,0 +1,15 @@
+{% extends "talkbrief/base.html" %}
+
+{% block title %}Transcribe{% endblock %}
+
+{% block content %}
+<h2>Transcribe Page</h2>
+<p>This is where transcription happens.</p>
+
+<!-- <h1>Transcription:</h1>
+<p>{{ transcript }}</p>
+<a href="{% url 'home' %}">Back to Home</a> -->
+
+<h2>Transcription:</h2>
+<pre>{{ transcript }}</pre>
+{% endblock %}
