@@ -1,15 +1,19 @@
 {% extends "talkbrief/base.html" %}
 
-{% block title %}Transcribe{% endblock %}
+{% block title %}Transcription{% endblock %}
 
 {% block content %}
-<h2>Transcribe Page</h2>
-<p>This is where transcription happens.</p>
 
 <!-- <h1>Transcription:</h1>
 <p>{{ transcript }}</p>
 <a href="{% url 'home' %}">Back to Home</a> -->
+<div class="transcription-container">
+    <h2>Transcription of provided audio/video:</h2>
+    <p id="transcriptionText">
+        {{ transcript }}
+    </p>
+    <button class="copy-button" onclick="copyText('transcriptionText')">Copy Transcription</button>
+    <button class="summary-button" onclick="goToSummaryPage()">Summarize</button>
+</div>
 
-<h2>Transcription:</h2>
-<pre>{{ transcript }}</pre>
 {% endblock %}

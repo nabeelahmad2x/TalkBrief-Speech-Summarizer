@@ -188,7 +188,7 @@ def transcribe(request):
             # Redirect to transcribe.html with the transcription result
             return render(request, 'talkbrief/transcribe.html', {'transcript': transcript.text})
         # Render home.html if the form hasn't been submitted yet
-   # return render(request, 'talkbrief/home.html')
+    #return render(request, 'talkbrief/home.html')
 
 def summarize(request):
     if request.method == "POST":
@@ -201,5 +201,4 @@ def summarize(request):
     else:
         form = SummaryForm()
     return render(request, 'talkbrief/summarize.html', {'form': form})
-
 

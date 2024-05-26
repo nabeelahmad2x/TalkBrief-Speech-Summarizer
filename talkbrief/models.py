@@ -15,4 +15,3 @@ class Summary(models.Model):
     text = models.TextField()
     summary = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
-
