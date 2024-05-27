@@ -13,7 +13,33 @@
         {{ transcript }}
     </p>
     <button class="copy-button" onclick="copyText('transcriptionText')">Copy Transcription</button>
-    <button class="summary-button" onclick="goToSummaryPage()">Summarize</button>
+    <form action="{% url 'summarize' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="transcription" value="{{ transcript }}">        
+        <button class="summary-button" type="submit" value="summarize">Summarize Text</button>
+    </form>
 </div>
+
+
+
+
+<script>
+    // this function copies the transcription text to clipboard using js..
+    function copyText(elementId) {
+            // Copy the text content of the specified element to the clipboard
+            var textElement = document.getElementById(elementId);
+            var textToCopy = textElement.innerText || textElement.textContent;
+
+            var textarea = document.createElement('textarea');
+            textarea.value = textToCopy;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            alert('Text copied to clipboard!');
+    }
+
+</script>
 
 {% endblock %}

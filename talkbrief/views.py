@@ -7,7 +7,7 @@ from django.contrib.auth import login, logout
 from django.http import HttpResponse
 from.forms import RegisterForm, AuthenticationForm
 from.forms import TranscriptionForm, SummaryForm
-import assemblyai as aai
+
 
 def home(request):
     return render(request, 'talkbrief/home.html')
@@ -78,70 +78,6 @@ def logout_view(request):
     return redirect('home')
 
 
-
-aai.settings.api_key = "6d9209c01dd54857b60536e9dba78bb1"
-
-# def transcribe(request):
-#     if request.method == 'POST':
-#         # Initialize the transcriber
-#         transcriber = aai.Transcriber()
-        
-#         # Check if a file was uploaded
-#         if 'audio_video_file' in request.FILES:
-#             file = request.FILES['audio_video_file']
-#             # Save the file temporarily to get its local path
-#             temp_path = f"/tmp/{file.name}"
-#             with open(temp_path, 'wb+') as destination:
-#                 for chunk in file.chunks():
-#                     destination.write(chunk)
-#             # Transcribe the local file
-#             transcript = transcriber.transcribe(temp_path)
-            
-#         # Check if a URL was entered
-#         elif 'url' in request.POST:
-#             url = request.POST['url']
-#             # Transcribe the URL
-#             transcript = transcriber.transcribe(url)
-        
-#         else:
-#             return HttpResponse("No file or URL provided.")
-        
-#         # Render the transcription result in the template
-#         return render(request, 'talkbrief/transcribe.html', {'transcript': transcript.text})
-    
-#     else:
-#         return render(request, 'home.html')
-
-# def transcribe_view(request):
-#     if request.method == 'POST':
-#         av_url_or_file = None
-        
-#         if 'av_url' in request.POST:
-#             # User entered a URL
-#             av_url_or_file = request.POST['av_url']
-#         elif 'file' in request.FILES:
-#             # User uploaded a file
-#             av_url_or_file = request.FILES['file']
-        
-#         if av_url_or_file:
-#             transcriber = aai.Transcriber()
-#             if isinstance(av_url_or_file, str):
-#                 # It's an online link
-#                 transcript = transcriber.transcribe(av_url_or_file)
-#             else:
-#                 # It's a local file
-#                 with open(av_url_or_file.name, 'rb') as f:
-#                     transcript = transcriber.transcribe(f.read())
-            
-#             return render(request, 'transcribe.html', {'transcript': transcript.text})
-    
-#     return render(request, 'home.html')
-
-# def display_transcription_view(request):
-#     return render(request, 'transcribe.html')
-
-# views.py
-
 ####for testing if file is reaching view
 #from django.http import HttpResponse
 # def transcribe(request):
@@ -175,6 +111,10 @@ def transcribe(request):
             # User uploaded a file
             av_url_or_file = request.FILES['file']
         
+        #importing assemblyai sdk for transcription..
+        import assemblyai as aai
+        aai.settings.api_key = "6d9209c01dd54857b60536e9dba78bb1"
+
         if av_url_or_file:
             transcriber = aai.Transcriber()
             if isinstance(av_url_or_file, str):
@@ -187,18 +127,24 @@ def transcribe(request):
             
             # Redirect to transcribe.html with the transcription result
             return render(request, 'talkbrief/transcribe.html', {'transcript': transcript.text})
-        # Render home.html if the form hasn't been submitted yet
-    #return render(request, 'talkbrief/home.html')
+    # Render home.html if the form hasn't been submitted yet
+    return render(request, 'talkbrief/home.html')
 
 def summarize(request):
-    if request.method == "POST":
-        form = SummaryForm(request.POST)
-        if form.is_valid():
-            summary = form.save(commit=False)
-            summary.user = request.user  # Assign the current user
-            summary.save()
-            return redirect('home')
+    # if request.method == "POST":
+    #     form = SummaryForm(request.POST)
+    #     if form.is_valid():
+    #         summary = form.save(commit=False)
+    #         summary.user = request.user  # Assign the current user
+    #         summary.save()
+    #         return redirect('talkbrief/home')
+    # else:
+    #     form = SummaryForm()
+    if request.method == 'POST':
+        transcription = request.POST.get('transcription', '')
+        # Process the transcription here
+        return HttpResponse("Transcription received.")
     else:
-        form = SummaryForm()
-    return render(request, 'talkbrief/summarize.html', {'form': form})
+        return HttpResponse("Invalid request.")
+    #return render(request, 'talkbrief/summarize.html', {'form': form})
 
