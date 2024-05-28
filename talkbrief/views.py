@@ -1,12 +1,13 @@
-from django.shortcuts import render
-
-# Create your views here.
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
+#from django.http import HttpResponse
+
 #from.models import Transcription, Summary
-from django.http import HttpResponse
 from.forms import RegisterForm, AuthenticationForm
-from.forms import TranscriptionForm, SummaryForm
+#from.forms import TranscriptionForm, SummaryForm
+
+from talkbrief.talkbrief_mods.text_summarizer import extract_summary
+from talkbrief.talkbrief_mods.audio_transcriber import extract_audio
 
 
 def home(request):
@@ -111,40 +112,26 @@ def transcribe(request):
             # User uploaded a file
             av_url_or_file = request.FILES['file']
         
-        #importing assemblyai sdk for transcription..
-        import assemblyai as aai
-        aai.settings.api_key = "6d9209c01dd54857b60536e9dba78bb1"
-
-        if av_url_or_file:
-            transcriber = aai.Transcriber()
-            if isinstance(av_url_or_file, str):
-                # It's an online link
-                transcript = transcriber.transcribe(av_url_or_file)
-            else:
-                # It's a local file
-                with open(av_url_or_file.name, 'rb') as f:
-                    transcript = transcriber.transcribe(f.read())
+        transcript = extract_audio(av_url_or_file)
             
-            # Redirect to transcribe.html with the transcription result
-            return render(request, 'talkbrief/transcribe.html', {'transcript': transcript.text})
-    # Render home.html if the form hasn't been submitted yet
+        # redirect to transcribe.html with the transcription result
+        return render(request, 'talkbrief/transcribe.html', {'transcript': transcript.text})
+    # will render home.html if the form hasn't been submitted yet
     return render(request, 'talkbrief/home.html')
 
 def summarize(request):
-    # if request.method == "POST":
-    #     form = SummaryForm(request.POST)
-    #     if form.is_valid():
-    #         summary = form.save(commit=False)
-    #         summary.user = request.user  # Assign the current user
-    #         summary.save()
-    #         return redirect('talkbrief/home')
-    # else:
-    #     form = SummaryForm()
     if request.method == 'POST':
-        transcription = request.POST.get('transcription', '')
-        # Process the transcription here
-        return HttpResponse("Transcription received.")
+        text = request.POST['transcription']
+        summary = extract_summary(text)
+        return render(request, 'talkbrief/summarize.html', {'summary': summary})
     else:
-        return HttpResponse("Invalid request.")
-    #return render(request, 'talkbrief/summarize.html', {'form': form})
+        return render(request, 'talkbrief/transcribe.html') 
 
+    #to check if view is recieving data from transcribe template
+    # if request.method == 'POST':
+    #     transcription = request.POST.get('transcription', '')
+    #     # Process the transcription here
+    #     return HttpResponse("Transcription received.")
+    # else:
+    #     return HttpResponse("Invalid request.")
+    

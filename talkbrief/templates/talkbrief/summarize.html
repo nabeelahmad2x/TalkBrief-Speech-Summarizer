@@ -4,5 +4,29 @@
 
 {% block content %}
 <h2>Summarize Page</h2>
-<p>This is where summarization happens.</p>
+
+<div class="summary-container">
+    <h2>Summary of given text:</h2>
+    <p id="summaryText">
+        {{summary}}
+    </p>
+    <button class="copy-button" onclick="copyText('summaryText')">Copy Summary</button>
+</div>
+
+<script>
+    function copyText(elementId) {
+            // Copy the text content of the specified element to the clipboard
+            var textElement = document.getElementById(elementId);
+            var textToCopy = textElement.innerText || textElement.textContent;
+
+            var textarea = document.createElement('textarea');
+            textarea.value = textToCopy;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            alert('Text copied to clipboard!');
+        }
+</script>
 {% endblock %}
