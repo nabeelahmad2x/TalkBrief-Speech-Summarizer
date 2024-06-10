@@ -1,5 +1,3 @@
-
-
 import assemblyai as aai
 aai.settings.api_key = "6d9209c01dd54857b60536e9dba78bb1"
 

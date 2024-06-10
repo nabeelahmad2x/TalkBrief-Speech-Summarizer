@@ -3,7 +3,7 @@ from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize, sent_tokenize
 from heapq import nlargest
 
-def extract_summary(text, num_sentences=8):
+def extract_summary(text, num_sentences=3):
     # Tokenize the text into sentences
     sentences = sent_tokenize(text)
 

@@ -3,13 +3,9 @@
 {% block title %}Summarize{% endblock %}
 
 {% block content %}
-<h2>Summarize Page</h2>
-
 <div class="summary-container">
     <h2>Summary of given text:</h2>
-    <p id="summaryText">
-        {{summary}}
-    </p>
+    <p id="summaryText"> {{summary}} </p>
     <button class="copy-button" onclick="copyText('summaryText')">Copy Summary</button>
 </div>
 

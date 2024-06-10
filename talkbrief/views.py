@@ -121,9 +121,18 @@ def transcribe(request):
 
 def summarize(request):
     if request.method == 'POST':
-        text = request.POST['transcription']
-        summary = extract_summary(text)
-        return render(request, 'talkbrief/summarize.html', {'summary': summary})
+        if 'transcription' in request.POST:
+            text = request.POST['transcription']
+        elif 'user_text' in request.POST:
+            text = request.POST['user_text']
+        else:
+            text = ''            
+        
+        if text:
+            summary = extract_summary(text)
+            return render(request, 'talkbrief/summarize.html', {'summary': summary})
+        else:
+            return render(request, 'talkbrief/summarize.html', {'error': 'No text provided.'})
     else:
         return render(request, 'talkbrief/transcribe.html') 
 
