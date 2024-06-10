@@ -35,14 +35,25 @@
     <br><br>
     <input type="submit" value="Transcribe">
 </form>
+
 <h1>OR</h1>
+
 <form action="{% url 'summarize' %}" method="post">
     {% csrf_token %}
     <label for="user_text">Enter Text to summarize:</label><br>
     <textarea id="user_text" name="user_text" placeholder="Paste your text here." rows="15" cols="80"></textarea>
     <br>
+    <label for="summary_length">Choose Summary Length:</label>
+    <select id="summary_length" name="summary_length">
+        <option value="">Select...</option>
+        <option value="35">35%</option>
+        <option value="50">50%</option>
+        <option value="75">75%</option>
+    </select>
+    <br>
     <input type="submit" value="Summarize Text">
 </form>
+
 
 {% endblock %}
 

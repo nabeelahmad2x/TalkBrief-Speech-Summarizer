@@ -128,8 +128,11 @@ def summarize(request):
         else:
             text = ''            
         
+        # Retrieve the selected summary length percentage
+        summary_length = request.POST.get('summary_length', '')
+        
         if text:
-            summary = extract_summary(text)
+            summary = extract_summary(text, summary_length)
             return render(request, 'talkbrief/summarize.html', {'summary': summary})
         else:
             return render(request, 'talkbrief/summarize.html', {'error': 'No text provided.'})
