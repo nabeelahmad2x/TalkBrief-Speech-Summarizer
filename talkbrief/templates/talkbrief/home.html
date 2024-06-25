@@ -25,7 +25,6 @@
 </form> -->
 
 <form action="{% url 'transcribe' %}" method="post" enctype="multipart/form-data">
-
     {% csrf_token %}
     <label for="av_url">Enter Audio/Video URL:</label>
     <input type="text" id="av_url" name="av_url" placeholder="Paste URL here">
@@ -44,7 +43,7 @@
     <textarea id="user_text" name="user_text" placeholder="Paste your text here." rows="15" cols="80"></textarea>
     <br>
     <label for="summary_length">Choose Summary Length:</label>
-    <select id="summary_length" name="summary_length">
+    <select id="summary_length" name="summary_length" required>
         <option value="">Select...</option>
         <option value="35">35%</option>
         <option value="50">50%</option>

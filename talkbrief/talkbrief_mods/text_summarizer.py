@@ -10,9 +10,12 @@ def count_words(text):
 def calculate_num_sentences(text, summary_length):
     """Calculate the number of sentences needed for the summary."""
     total_words = count_words(text)
-    target_word_count = (total_words * int(summary_length)) / 100
-    average_sentence_length = total_words / len(sent_tokenize(text))
-    num_sentences = round(target_word_count / average_sentence_length)
+    if total_words < 125:
+        num_sentences = len(sent_tokenize(text))
+    else:
+        target_word_count = (total_words * int(summary_length)) / 100
+        average_sentence_length = total_words / len(sent_tokenize(text))
+        num_sentences = round(target_word_count / average_sentence_length)
     return max(1, min(num_sentences, 5))  # Limit between 1 and 5 sentences for demonstration
 
 def extract_summary(text, summary_length):

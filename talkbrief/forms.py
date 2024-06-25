@@ -3,22 +3,37 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from.models import Transcription, Summary
+from.models import Transcriptions, Summaries
 
 # class UserForm(forms.ModelForm):
 #     class Meta:
 #         model = User
 #         fields = ['username', 'email', 'password']
 
+# class TranscriptionForm(forms.ModelForm):
+#     class Meta:
+#         model = Transcriptions
+#         fields = ['audio_file', 'text']
+
 class TranscriptionForm(forms.ModelForm):
     class Meta:
-        model = Transcription
-        fields = ['audio_file', 'text']
+        model = Transcriptions
+        fields = ['file_name_link', 'transcription', 'userid']
+
+
+
+# class SummaryForm(forms.ModelForm):
+#     class Meta:
+#         model = Summaries
+#         fields = ['text', 'summary']
+from django import forms
+from .models import Summaries
 
 class SummaryForm(forms.ModelForm):
     class Meta:
-        model = Summary
-        fields = ['text', 'summary']
+        model = Summaries
+        fields = ['transcription', 'summary']
+
 
 class RegisterForm(UserCreationForm):
     email = forms.EmailField(required=True)

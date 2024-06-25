@@ -1,5 +1,8 @@
 import assemblyai as aai
-aai.settings.api_key = "6d9209c01dd54857b60536e9dba78bb1"
+from.keys import AAI_key
+
+
+aai.settings.api_key = AAI_key
 
 def extract_audio(av_url_or_file):
 
