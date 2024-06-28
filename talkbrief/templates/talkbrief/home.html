@@ -3,73 +3,901 @@
 {% block title %}TalkBrief-Home{% endblock %}
 
 {% block content %}
-<h2>Welcome to Home Page</h2>
-<!-- <h2>Upload Audio/Video or Enter URL</h2>
-    <form action="{% url 'transcribe' %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <input type="file" name="audio_video_file" accept="audio/*,video/*">
-        <br><br>
-        Or enter URL:
-        <input type="text" name="url">
-        <br><br>
-        <button type="submit">Submit</button>
-    </form> -->
 
 
-<!-- <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <input type="text" name="av_url" placeholder="Enter URL here">
-     Or 
-    <input type="file" name="file">
-    <button type="submit">Transcribe</button>
-</form> -->
-
-<form action="{% url 'transcribe' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <label for="av_url">Enter Audio/Video URL:</label>
-    <input type="text" id="av_url" name="av_url" placeholder="Paste URL here">
-    <br><br>
-    <label for="file_upload">Upload File:</label>
-    <input type="file" id="file_upload" name="file">
-    <br><br>
-    <input type="submit" value="Transcribe">
-</form>
-
-<h1>OR</h1>
-
-<form action="{% url 'summarize' %}" method="post">
-    {% csrf_token %}
-    <label for="user_text">Enter Text to summarize:</label><br>
-    <textarea id="user_text" name="user_text" placeholder="Paste your text here." rows="15" cols="80"></textarea>
-    <br>
-    <label for="summary_length">Choose Summary Length:</label>
-    <select id="summary_length" name="summary_length" required>
-        <option value="">Select...</option>
-        <option value="35">35%</option>
-        <option value="50">50%</option>
-        <option value="75">75%</option>
-    </select>
-    <br>
-    <input type="submit" value="Summarize Text">
-</form>
+<html lang="en" class="__variable_aaf875 __variable_228ab5 light" style="color-scheme: light">
 
 
+<title>
+    TalkBrief - Article Summarizer &amp; Online Text Summarizing Tool
+</title>
+<meta name="description"
+    content="TalkBrief This is a Free online text summarizing tool that automatically condenses long articles, documents, essays, or papers into key summary paragraphs using state-of-the-art AI." />
+
+
+
+<link rel="stylesheet" href="../../static/homestyle.css">
+
+
+
+
+<body class="bg-gray-900 dark">
+    <script>
+        !(function () {
+            try {
+                var d = document.documentElement,
+                    c = d.classList;
+                c.remove("light", "dark");
+                var e = localStorage.getItem("theme");
+                if ("system" === e || (!e && true)) {
+                    var t = "(prefers-color-scheme: dark)",
+                        m = window.matchMedia(t);
+                    if (m.media !== t || m.matches) {
+                        d.style.colorScheme = "dark";
+                        c.add("dark");
+                    } else {
+                        d.style.colorScheme = "light";
+                        c.add("light");
+                    }
+                } else if (e) {
+                    c.add(e || "");
+                }
+                if (e === "light" || e === "dark") d.style.colorScheme = e;
+            } catch (e) { }
+        })();
+    </script>
+    <style>
+        #nprogress {
+            pointer-events: none;
+        }
+
+        #nprogress .bar {
+            background: #29d;
+            position: fixed;
+            z-index: 9999;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+        }
+
+        #nprogress .peg {
+            display: block;
+            position: absolute;
+            right: 0px;
+            width: 100px;
+            height: 100%;
+            box-shadow: 0 0 10px #29d, 0 0 5px #29d;
+            opacity: 1;
+            -webkit-transform: rotate(3deg) translate(0px, -4px);
+            -ms-transform: rotate(3deg) translate(0px, -4px);
+            transform: rotate(3deg) translate(0px, -4px);
+        }
+
+        #nprogress .spinner {
+            display: block;
+            position: fixed;
+            z-index: 1031;
+            top: 15px;
+            right: 15px;
+        }
+
+        #nprogress .spinner-icon {
+            width: 18px;
+            height: 18px;
+            box-sizing: border-box;
+            border: solid 2px transparent;
+            border-top-color: #29d;
+            border-left-color: #29d;
+            border-radius: 50%;
+            -webkit-animation: nprogresss-spinner 400ms linear infinite;
+            animation: nprogress-spinner 400ms linear infinite;
+        }
+
+        .nprogress-custom-parent {
+            overflow: hidden;
+            position: relative;
+        }
+
+        .nprogress-custom-parent #nprogress .spinner,
+        .nprogress-custom-parent #nprogress .bar {
+            position: absolute;
+        }
+
+        @-webkit-keyframes nprogress-spinner {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes nprogress-spinner {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+    <div class="elfsight-app-5ec388b4-22f3-49ed-a631-d696a10f150e banner-platform-js-header-main"
+        data-elfsight-app-lazy="true"></div>
+    <div class="min-h-screen overflow-hidden">
+        <div class="relative max-w-6xl mx-auto h-0 pointer-events-none" aria-hidden="true">
+            <svg class="absolute top-0 right-0 transform" width="722" height="320" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="illustration-01" x1="-4.14" y1="43.12" x2="303.145" y2="391.913"
+                        gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#5D5DFF" stop-opacity=".01"></stop>
+                        <stop offset=".538" stop-color="#5D5DFF" stop-opacity=".32"></stop>
+                        <stop offset="1" stop-color="#5D5DFF" stop-opacity=".01"></stop>
+                    </linearGradient>
+                </defs>
+                <path d="" fill="url(#illustration-01)"></path>
+            </svg>
+        </div>
+        <header class="absolute w-full z-30">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6">
+                <div class="flex items-center justify-between h-20">
+                    <div class="shrink-0 mr-4">
+                        <a class="block" aria-label="TLDR This" href="/">
+                            <img alt="TLDR This" loading="lazy" width="80" height="30" decoding="async" data-nimg="1"
+                                style="color: transparent" src="logo (2).png" />
+                        </a>
+                    </div>
+                    <nav class="hidden md:flex md:grow">
+                        <ul class="flex grow justify-end flex-wrap items-center">
+                            <li>
+                                <a class="text-gray-200 hover:text-gray-100 font-semibold px-4 py-2 flex items-center transition duration-150 ease-in-out"
+                                    href="#uploadFileSection">Chat with PDF</a>
+                            </li>
+                            <li>
+                                <a class="text-gray-300 hover:text-gray-200 px-4 py-2 flex items-center transition duration-150 ease-in-out"
+                                    href="#extensionFeature">Browser Extensions</a>
+                            </li>
+                            <li>
+                                <a class="text-gray-300 hover:text-gray-200 px-4 py-2 flex items-center transition duration-150 ease-in-out"
+                                    href="#mainFeatures">Features</a>
+                            </li>
+                            <li>
+                                <a class="text-gray-300 hover:text-gray-200 px-4 py-2 flex items-center transition duration-150 ease-in-out"
+                                    href="/pricing">Pricing</a>
+                            </li>
+                        </ul>
+                        <ul class="flex grow justify-end flex-wrap items-center">
+                            <li>
+                                <a class="font-medium text-purple-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
+                                    href="{% url 'login_view' %}">Sign in</a>
+                            </li>
+                            <li>
+                                <a class="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3"
+                                    href="{% url 'register' %}">Sign Up</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="md:hidden">
+                        <button id="mobile-menu-toggle" class="hamburger" aria-controls="mobile-nav"
+                            aria-expanded="false">
+                            <span class="sr-only">Menu</span>
+                            <svg class="w-6 h-6 fill-current text-gray-300 hover:text-gray-200 transition duration-150 ease-in-out"
+                                viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <rect y="4" width="24" height="2" rx="1"></rect>
+                                <rect y="11" width="24" height="2" rx="1"></rect>
+                                <rect y="18" width="24" height="2" rx="1"></rect>
+                            </svg>
+                        </button>
+                        <nav id="mobile-nav"
+                            class="absolute top-full z-20 left-0 w-full px-4 sm:px-6 overflow-hidden transition-all duration-300 ease-in-out"
+                            style="max-height: 0; opacity: 0;">
+                            <ul class="bg-gray-800 px-4 py-2">
+                                <li>
+                                    <a class="flex text-gray-200 hover:text-gray-100 font-semibold py-2"
+                                        href="#uploadFileSection">Chat with PDF</a>
+                                </li>
+                                <li>
+                                    <a class="flex text-gray-300 hover:text-gray-200 py-2"
+                                        href="#extensionFeature">Browser Extensions</a>
+                                </li>
+                                <li>
+                                    <a class="flex text-gray-300 hover:text-gray-200 py-2"
+                                        href="#mainFeatures">Features</a>
+                                </li>
+                                <li>
+                                    <a class="flex font-medium w-full text-purple-600 hover:text-gray-200 py-2 justify-center"
+                                        href="{% url 'login_view' %}">Sign in</a>
+                                </li>
+                                <li>
+                                    <a class="font-medium w-full inline-flex items-center justify-center border border-transparent px-4 py-2 my-2 rounded-sm text-white bg-purple-600 hover:bg-purple-700 transition duration-150 ease-in-out"
+                                        href="{% url 'login_view' %}">Sign Up</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+                var mobileNav = document.getElementById('mobile-nav');
+
+                mobileMenuToggle.addEventListener('click', function () {
+                    var expanded = mobileMenuToggle.getAttribute('aria-expanded') === 'true';
+                    mobileMenuToggle.setAttribute('aria-expanded', String(!expanded));
+                    mobileNav.style.maxHeight = expanded ? '0' : '100vh';
+                    mobileNav.style.opacity = expanded ? '0' : '1';
+                });
+            });
+        </script>
+        <div class="mt-20">
+            <section class="bg-gray-900 w-[90%] mx-auto">
+                <div class="absolute left-0 bottom-0 -ml-20 hidden lg:block pointer-events-none" aria-hidden="true"
+                    data-aos="fade-up" data-aos-delay="400">
+                    <svg class="max-w-full" width="564" height="552" viewBox="0 0 564 552" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="illustration-02" x1="-3.766" y1="300.204" x2="284.352" y2="577.921"
+                                gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#5D5DFF" stop-opacity=".01"></stop>
+                                <stop offset="1" stop-color="#5D5DFF" stop-opacity=".32"></stop>
+                            </linearGradient>
+                        </defs>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="" fill="url(#illustration-02)"></path>
+                    </svg>
+                </div>
+                <div class="relative pt-10 pb-10 md:pt-20 md:pb-16">
+                    <div class="max-w-3xl mx-auto text-center pb-12 md:pb-16">
+                        <h1 class="h1 mb-4 text-zinc-200" data-aos="fade-up">
+                            Summarize any
+                            <span id="blinkingWord1">paragraph</span>
+                            <span id="blinkingWord2" style="display: none;"></span>
+                            <span class="cursor font-thin animate-blink">|</span>
+                            <br />in a click.
+                        </h1>
+                        <p class="text-xl text-gray-400 mb-8" data-aos="fade-up" data-aos-delay="200">
+                            TalkBrief This helps you summarize any piece of text into concise,
+                            easy to digest content so you can free yourself from information
+                            overload.
+                        </p>
+                        <div class="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center">
+                            <div data-aos="fade-up" data-aos-delay="400">
+                                <a class="btn text-white bg-purple-600 hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0"
+                                    href="#uploadFileSection">SUMMARIZE NOW - IT'S FREE</a>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <script>
+                        // Function to reveal each letter of the word sequentially
+                        function revealWord(wordElement, word) {
+                            var index = 0;
+                            var intervalId = setInterval(function () {
+                                if (index <= word.length) {
+                                    wordElement.textContent = word.substring(0, index++);
+                                } else {
+                                    clearInterval(intervalId);
+                                    // Start removing letters of the word
+                                    removeWord(wordElement, word);
+                                }
+                            }, 100); // Interval between each letter reveal in milliseconds (100ms = 0.1s)
+                        }
+
+                        // Function to remove each letter of the word sequentially
+                        function removeWord(wordElement, word) {
+                            var index = word.length;
+                            var intervalId = setInterval(function () {
+                                if (index >= 0) {
+                                    wordElement.textContent = word.substring(0, index--);
+                                } else {
+                                    clearInterval(intervalId);
+                                    // If the current word is "paragraph", reveal the next word "Text"
+                                    if (wordElement.id === 'blinkingWord1') {
+                                        var nextWordElement = document.getElementById('blinkingWord2');
+                                        nextWordElement.style.display = 'inline';
+                                        revealWord(nextWordElement, 'Document');
+                                    } else { // If the current word is "Text", reveal the next word "paragraph"
+                                        var nextWordElement = document.getElementById('blinkingWord1');
+                                        nextWordElement.style.display = 'inline';
+                                        revealWord(nextWordElement, 'paragraph');
+                                    }
+                                }
+                            }, 100); // Interval between each letter removal in milliseconds (100ms = 0.1s)
+                        }
+
+                        // Call the function when the page is loaded to start revealing the first word
+                        window.onload = function () {
+                            revealWord(document.getElementById('blinkingWord1'), 'paragraph');
+                        };
+                    </script>
+
+
+
+
+
+
+
+
+
+
+                    <div class="relative flex justify-center items-center" data-aos="fade-up" data-aos-delay="200">
+                        <video width="1024" height="576" loop="" controls="" muted="" autoplay=""
+                            poster="images/comparison.jpg">
+                            <source src="videos/tldrthisMainVideo.mp4" type="video/mp4" />
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+            </section>
+            <section class="md:container mt-10 mb-16">
+                <div class="mx-auto w-3/4 sm:w-5/6 max-w-[1024px]">
+                    <h2 class="mb-10 text-base font-medium text-center text-gray-900 dark:text-slate-400">Trusted By
+                    </h2>
+                    <div class="flex justify-center items-center">
+                        <img alt="University of Toronto" loading="lazy" width="100" height="32" decoding="async"
+                            src="University-logo-02.png" />
+                    </div>
+                </div>
+            </section>
+
+            <div class="container">
+                <div class="form-container">
+                    <form action="{% url 'transcribe' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <label for="av_url">Enter Audio/Video URL:</label>
+                        <input type="text" id="av_url" name="av_url" placeholder="Paste URL here">
+                        <br><br>
+                        <label for="file_upload">Upload File:</label>
+                        <input type="file" id="file_upload" name="file">
+                        <br><br>    
+                        <input type="submit" value="Transcribe">    
+                        <input type="hidden" id="file_path" name="file_path">
+                    </form>
+                </div>
+        
+                <h1>OR</h1>
+        
+                <div class="form-container">
+                    <form action="{% url 'summarize' %}" method="post">
+                        {% csrf_token %}
+                        <label for="user_text">Enter Text to summarize:</label><br>
+                        <textarea id="user_text" name="user_text" placeholder="Paste your text here." rows="15" cols="80"></textarea>
+                        <br>
+                        <label for="summary_length">Choose Summary Length:</label>
+                        <select id="summary_length" name="summary_length" required>
+                            <option value="">Select...</option>
+                            <option value="35">35%</option>
+                            <option value="50">50%</option>
+                            <option value="75">75%</option>
+                        </select>
+                        <br>
+                        <input type="submit" value="Summarize Text">
+                    </form>
+                </div>
+            </div>
+
+
+            <style>
+                .active {
+                    background-color: rgb(94, 94, 236) !important;
+                }
+            </style>
+
+            <script>
+                const uploadFileButton = document.getElementById('uploadFileButton');
+                const addUrlButton = document.getElementById('addUrlButton');
+                const addTextButton = document.getElementById('addTextButton');
+                const fileInput = document.getElementById('fileInput');
+                const fileUploadSection = document.getElementById('fileUploadSection');
+                const urlSection = document.getElementById('urlSection');
+                const textSection = document.getElementById('textSection');
+
+                function resetButtonColors() {
+                    uploadFileButton.classList.remove('active');
+                    addUrlButton.classList.remove('active');
+                    addTextButton.classList.remove('active');
+
+                    uploadFileButton.classList.add('bg-gray-700');
+                    addUrlButton.classList.add('bg-gray-700');
+                    addTextButton.classList.add('bg-gray-700');
+                }
+
+                function activateButton(button) {
+                    resetButtonColors();
+                    button.classList.add('active');
+                    button.classList.remove('bg-gray-700');
+                }
+
+                uploadFileButton.addEventListener('click', function () {
+                    activateButton(uploadFileButton);
+                    fileUploadSection.style.display = 'block';
+                    urlSection.style.display = 'none';
+                    textSection.style.display = 'none';
+                    fileInput.click(); // Trigger the file input click
+                });
+
+                addUrlButton.addEventListener('click', function () {
+                    activateButton(addUrlButton);
+                    fileUploadSection.style.display = 'none';
+                    urlSection.style.display = 'block';
+                    textSection.style.display = 'none';
+                });
+
+                addTextButton.addEventListener('click', function () {
+                    activateButton(addTextButton);
+                    fileUploadSection.style.display = 'none';
+                    urlSection.style.display = 'none';
+                    textSection.style.display = 'block';
+                });
+            </script>
+
+            <script>
+                const uploadFileButton = document.getElementById('uploadFileButton');
+                const addUrlButton = document.getElementById('addUrlButton');
+                const addTextButton = document.getElementById('addTextButton');
+                const fileInput = document.getElementById('fileInput');
+                const fileUploadSection = document.getElementById('fileUploadSection');
+                const urlSection = document.getElementById('urlSection');
+                const textSection = document.getElementById('textSection');
+
+                function resetButtonColors() {
+                    uploadFileButton.classList.remove('active');
+                    addUrlButton.classList.remove('active');
+                    addTextButton.classList.remove('active');
+
+                    uploadFileButton.classList.add('bg-gray-700');
+                    addUrlButton.classList.add('bg-gray-700');
+                    addTextButton.classList.add('bg-gray-700');
+                }
+
+                uploadFileButton.addEventListener('click', function () {
+                    resetButtonColors();
+                    uploadFileButton.classList.add('active');
+                    fileUploadSection.style.display = 'block';
+                    urlSection.style.display = 'none';
+                    textSection.style.display = 'none';
+                    fileInput.click(); // Trigger the file input click
+                });
+
+                addUrlButton.addEventListener('click', function () {
+                    resetButtonColors();
+                    addUrlButton.classList.add('active');
+                    fileUploadSection.style.display = 'none';
+                    urlSection.style.display = 'block';
+                    textSection.style.display = 'none';
+                });
+
+                addTextButton.addEventListener('click', function () {
+                    resetButtonColors();
+                    addTextButton.classList.add('active');
+                    fileUploadSection.style.display = 'none';
+                    urlSection.style.display = 'none';
+                    textSection.style.display = 'block';
+                });
+            </script>
+
+
+
+
+
+            <section id="mainFeatures" class="relative w-full mb-24">
+                <div class="relative md:container px-4 sm:px-6">
+                    <section>
+                        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+                            <div class="py-12 md:py-20 border-gray-800">
+                                <div class="max-w-3xl mx-auto text-center pb-12 md:pb-16">
+                                    <div
+                                        class="inline-flex text-sm font-semibold py-1 px-3 m-2 text-green-600 bg-green-200 rounded-full mb-4">
+                                        Attain concise understanding
+                                    </div>
+                                    <h2 class="h2 mb-4">Single platform, endless summaries</h2>
+                                    <p class="text-xl text-gray-400">
+                                        Transforming information overload into manageable insights
+                                        — consistently striving for clarity.
+                                    </p>
+                                </div>
+                                <div class="grid gap-20">
+                                    <div class="md:grid md:grid-cols-12 md:gap-6 items-center">
+                                        <div class="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-5 lg:col-span-6 mb-8 md:mb-0 md:order-1"
+                                            data-aos="fade-up">
+                                            <img alt="Features 01" loading="lazy" width="540" height="405"
+                                                decoding="async" data-nimg="1"
+                                                class="max-w-full mx-auto md:max-w-none h-auto"
+                                                style="color: transparent" srcset="
+                           
+                          " src="image/url%3D%252F_next%252Fstatic%252Fmedia%252Fauto_summary.1b746c63.png%26w%3D1080%26q%3D75" />
+                                        </div>
+                                        <div class="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6"
+                                            data-aos="fade-right">
+                                            <div class="md:pr-4 lg:pr-12 xl:pr-16">
+                                                <div class="font-architects-daughter text-xl text-purple-600 mb-2">
+                                                    Condense &amp; Comprehend: Summarization Simplified
+                                                </div>
+                                                <h3 class="h3 mb-3">
+                                                    100% Automatic Article Summarization with just a
+                                                    click
+                                                </h3>
+                                                <p class="text-xl text-gray-400 mb-4">
+                                                    In the sheer amount of information that bombards
+                                                    Internet users from all sides, hardly anyone wants
+                                                    to devote their valuable time to reading long texts.
+                                                    TalkBrief's clever AI analyzes any piece of text and
+                                                    summarizes it automatically, in a way that makes it
+                                                    easy for you to read, understand and act on.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="md:grid md:grid-cols-12 md:gap-6 items-center">
+                                        <div class="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-5 lg:col-span-6 mb-8 md:mb-0 rtl"
+                                            data-aos="fade-up">
+                                            <img alt="Features 02" loading="lazy" width="540" height="325"
+                                                decoding="async" data-nimg="1"
+                                                class="max-w-full mx-auto md:max-w-none h-auto"
+                                                style="color: transparent" srcset="
+                            
+                          " src="image/url%3D%252F_next%252Fstatic%252Fmedia%252Farticle_metadata.7ef36c61.png%26w%3D1080%26q%3D75" />
+
+
+                                        </div>
+                                        <div class="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6"
+                                            data-aos="fade-left">
+                                            <div class="md:pl-4 lg:pl-12 xl:pl-16">
+                                                <div class="font-architects-daughter text-xl text-purple-600 mb-2">
+                                                    Essentials Unveiled: Metadata Extraction Simplified
+                                                </div>
+                                                <h3 class="h3 mb-3">Article Metadata Extraction</h3>
+                                                <p class="text-xl text-gray-400 mb-4">
+                                                    TalkBrief, the online article summarizer tool, not
+                                                    only condenses lengthy articles into shorter,
+                                                    digestible content, but it also automatically
+                                                    extracts essential metadata such as author and date
+                                                    information, related images, and the title.
+                                                    Additionally, it estimates the reading time for news
+                                                    articles and blog posts, ensuring you have all the
+                                                    necessary information consolidated in one place for
+                                                    efficient reading.
+                                                </p>
+                                                <ul class="text-lg text-gray-400 -mb-2">
+                                                    <li class="flex items-center mb-2">
+                                                        <svg class="w-3 h-3 fill-current text-green-500 mr-2 shrink-0"
+                                                            viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                                                            <path
+                                                                d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z">
+                                                            </path>
+                                                        </svg><span>Automated author-date extraction</span>
+                                                    </li>
+                                                    <li class="flex items-center mb-2">
+                                                        <svg class="w-3 h-3 fill-current text-green-500 mr-2 shrink-0"
+                                                            viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                                                            <path
+                                                                d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z">
+                                                            </path>
+                                                        </svg><span>Related images consolidation</span>
+                                                    </li>
+                                                    <li class="flex items-center">
+                                                        <svg class="w-3 h-3 fill-current text-green-500 mr-2 shrink-0"
+                                                            viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                                                            <path
+                                                                d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z">
+                                                            </path>
+                                                        </svg><span>Instant reading time estimation</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="md:grid md:grid-cols-12 md:gap-6 items-center">
+                                        <div class="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-5 lg:col-span-6 mb-8 md:mb-0 md:order-1"
+                                            data-aos="fade-up">
+                                            <img alt="Features 03" loading="lazy" width="540" height="405"
+                                                decoding="async" data-nimg="1"
+                                                class="max-w-full mx-auto md:max-w-none h-auto"
+                                                style="color: transparent" srcset="
+                           
+                          " src="image/url%3D%252F_next%252Fstatic%252Fmedia%252Fdistraction_free.cc207b14.png%26w%3D1080%26q%3D75" />
+                                        </div>
+                                        <div class="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6"
+                                            data-aos="fade-right">
+                                            <div class="md:pr-4 lg:pr-12 xl:pr-16">
+                                                <div class="font-architects-daughter text-xl text-purple-600 mb-2">
+                                                    Pure Focus, No Fuss: Your Ad-Free Reading Haven
+                                                </div>
+                                                <h3 class="h3 mb-3">
+                                                    Distraction and ad-free reading
+                                                </h3>
+                                                <p class="text-xl text-gray-400 mb-4">
+                                                    As an efficient article summarizer tool, TalkBrief
+                                                    meticulously eliminates ads, popups, graphics, and
+                                                    other online distractions, providing you with a
+                                                    clean, uncluttered reading experience. Moreover, it
+                                                    enhances your focus and comprehension by presenting
+                                                    the essential content in a concise and
+                                                    straightforward manner, thus transforming the way
+                                                    you consume information online.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="md:grid md:grid-cols-12 md:gap-6 items-center">
+                                        <div class="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-5 lg:col-span-6 mb-8 md:mb-0 rtl"
+                                            data-aos="fade-up">
+                                            <img alt="Features 02" loading="lazy" width="540" height="325"
+                                                decoding="async" data-nimg="1"
+                                                class="max-w-full mx-auto md:max-w-none h-auto"
+                                                style="color: transparent" srcset="
+                            
+                          " src="image/url%3D%252F_next%252Fstatic%252Fmedia%252Fharekrishna.0e7a40b5.png%26w%3D1080%26q%3D75" />
+                                        </div>
+                                        <div class="max-w-xl md:max-w-none md:w-full mx-auto md:col-span-7 lg:col-span-6"
+                                            data-aos="fade-left">
+                                            <div class="md:pl-4 lg:pl-12 xl:pl-16">
+                                                <div class="font-architects-daughter text-xl text-purple-600 mb-2">
+                                                    Dodge the Distraction, Embrace the Essence
+                                                </div>
+                                                <h3 class="h3 mb-3">Avoid the Clickbait Trap</h3>
+                                                <p class="text-xl text-gray-400 mb-4">
+                                                    TalkBrief smartly selects the most relevant points
+                                                    from a text, filtering out weak arguments and
+                                                    baseless speculation. It allows for quick
+                                                    comprehension of the essence, without needing to
+                                                    sift through all paragraphs. By focusing on core
+                                                    substance and disregarding fluff, it enhances
+                                                    efficiency in consuming information, freeing more
+                                                    time for valuable content.
+                                                </p>
+                                                <ul class="text-lg text-gray-400 -mb-2">
+                                                    <li class="flex items-center mb-2">
+                                                        <svg class="w-3 h-3 fill-current text-green-500 mr-2 shrink-0"
+                                                            viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                                                            <path
+                                                                d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z">
+                                                            </path>
+                                                        </svg><span>Filters weak arguments and speculation</span>
+                                                    </li>
+                                                    <li class="flex items-center mb-2">
+                                                        <svg class="w-3 h-3 fill-current text-green-500 mr-2 shrink-0"
+                                                            viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                                                            <path
+                                                                d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z">
+                                                            </path>
+                                                        </svg><span>Highlights most relevant points</span>
+                                                    </li>
+                                                    <li class="flex items-center">
+                                                        <svg class="w-3 h-3 fill-current text-green-500 mr-2 shrink-0"
+                                                            viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+                                                            <path
+                                                                d="M10.28 2.28L3.989 8.575 1.695 6.28A1 1 0 00.28 7.695l3 3a1 1 0 001.414 0l7-7A1 1 0 0010.28 2.28z">
+                                                            </path>
+                                                        </svg><span>Saves time by eliminating fluff</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+            <section id="useCase" class="relative w-full">
+                <div class="relative md:container px-4 sm:px-6">
+                    <section>
+                        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+                            <div class="py-12 md:py-20 border-t border-gray-800">
+                                <div class="max-w-3xl mx-auto text-center pb-12 md:pb-20">
+                                    <h2 class="h2 mb-4">Who is TalkBrief for?</h2>
+                                    <p class="text-xl text-gray-400">
+                                        TalkBrief is a summarizing tool designed for students,
+                                        writers, teachers, institutions, journalists, and any
+                                        internet user who needs to quickly understand the essence
+                                        of lengthy content.
+                                    </p>
+                                </div>
+                                <div class="max-w-sm mx-auto grid gap-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-16 items-start md:max-w-2xl lg:max-w-none"
+                                    data-aos-id-blocks="true">
+                                    <div class="relative flex flex-col items-center" data-aos="fade-up"
+                                        data-aos-anchor="[data-aos-id-blocks]">
+                                        <img alt="Open Book Icon" loading="lazy" width="64" height="64" decoding="async"
+                                            data-nimg="1" class="w-16 h-16 mb-4 rounded-full bg-purple-600 p-3.5"
+                                            style="color: transparent" src="media/openBookIcon.460222cb.svg" />
+                                        <h3 class="h3 mb-2 text-center">
+                                            Anyone with access to the Internet
+                                        </h3>
+                                        <p class="text-lg text-gray-400 text-center">
+                                            TalkBrief is for anyone who just needs to get the gist
+                                            of a long article. You can read this summary, then go
+                                            read the original article if you want to.
+                                        </p>
+                                    </div>
+                                    <div class="relative flex flex-col items-center" data-aos="fade-up"
+                                        data-aos-delay="100" data-aos-anchor="[data-aos-id-blocks]">
+                                        <img alt="Open Book Icon" loading="lazy" width="64" height="64" decoding="async"
+                                            data-nimg="1" class="w-16 h-16 mb-4 rounded-full bg-purple-600 p-3.5"
+                                            style="color: transparent" src="media/userGraduateIcon.a2c6381e.svg" />
+                                        <h3 class="h3 mb-2 text-center">Students</h3>
+                                        <p class="text-lg text-gray-400 text-center">
+                                            TalkBrief is for students studying for exams, who are
+                                            overwhelmed by information overload. This tool will help
+                                            them summarize information into a concise, easy to
+                                            digest piece of text.
+                                        </p>
+                                    </div>
+                                    <div class="relative flex flex-col items-center" data-aos="fade-up"
+                                        data-aos-delay="200" data-aos-anchor="[data-aos-id-blocks]">
+                                        <img alt="Open Book Icon" loading="lazy" width="64" height="64" decoding="async"
+                                            data-nimg="1" class="w-16 h-16 mb-4 rounded-full bg-purple-600 p-3.5"
+                                            style="color: transparent" src="media/pencilIcon.0ca595f9.svg" />
+                                        <h3 class="h3 mb-2 text-center">Writers</h3>
+                                        <p class="text-lg text-gray-400 text-center">
+                                            TalkBrief is for anyone who writes frequently, and wants
+                                            to quickly summarize their articles for easier writing
+                                            and easier reading.
+                                        </p>
+                                    </div>
+                                    <div class="relative flex flex-col items-center" data-aos="fade-up"
+                                        data-aos-delay="300" data-aos-anchor="[data-aos-id-blocks]">
+                                        <img alt="Open Book Icon" loading="lazy" width="64" height="64" decoding="async"
+                                            data-nimg="1" class="w-16 h-16 mb-4 rounded-full bg-purple-600 p-3.5"
+                                            style="color: transparent" src="media/chalkboardUserIcon.78e1499e.svg" />
+                                        <h3 class="h3 mb-2 text-center">Teachers</h3>
+                                        <p class="text-lg text-gray-400 text-center">
+                                            TalkBrief is for teachers who want to summarize a long
+                                            document or chapter for their students.
+                                        </p>
+                                    </div>
+                                    <div class="relative flex flex-col items-center" data-aos="fade-up"
+                                        data-aos-delay="400" data-aos-anchor="[data-aos-id-blocks]">
+                                        <img alt="Open Book Icon" loading="lazy" width="64" height="64" decoding="async"
+                                            data-nimg="1" class="w-16 h-16 mb-4 rounded-full bg-purple-600 p-3.5"
+                                            style="color: transparent" src="media/universityIcon.fcfb785b.svg" />
+                                        <h3 class="h3 mb-2 text-center">Institutions</h3>
+                                        <p class="text-lg text-gray-400 text-center">
+                                            TalkBrief is for corporations and institutions who want
+                                            to condense a piece of content into a summary that is
+                                            easy to digest for their employees/students.
+                                        </p>
+                                    </div>
+                                    <div class="relative flex flex-col items-center" data-aos="fade-up"
+                                        data-aos-delay="500" data-aos-anchor="[data-aos-id-blocks]">
+                                        <img alt="Open Book Icon" loading="lazy" width="64" height="64" decoding="async"
+                                            data-nimg="1" class="w-16 h-16 mb-4 rounded-full bg-purple-600 p-3.5"
+                                            style="color: transparent" src="media/newspaperIcon.54bb3885.svg" />
+                                        <h3 class="h3 mb-2 text-center">Journalists</h3>
+                                        <p class="text-lg text-gray-400 text-center">
+                                            TalkBrief is for journalists who need to summarize a
+                                            long article for their newspaper or magazine.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+
+            <section class="bg-white dark:bg-gray-900 mb-16">
+                <div class="mx-auto md:container px-4 xl:px-6 md:px-6">
+                    <section>
+                        <div class="max-w-6xl mx-auto px-4 sm:px-6">
+                            <div class="relative bg-purple-600 py-10 px-8 md:py-12 md:px-12" data-aos="fade-up">
+                                <div class="absolute right-0 top-0 -ml-40 pointer-events-none" aria-hidden="true">
+                                    <svg width="238" height="110" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <defs>
+                                            <linearGradient id="illustration-04" x1="369.483" y1="-84.633" x2="139.954"
+                                                y2="-199.798" gradientUnits="userSpaceOnUse">
+                                                <stop stop-color="#fff" stop-opacity=".01"></stop>
+                                                <stop offset="1" stop-color="#fff" stop-opacity=".24"></stop>
+                                            </linearGradient>
+                                        </defs>
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="" fill="url(#illustration-04)">
+                                        </path>
+                                    </svg>
+                                </div>
+                                <div class="relative flex flex-col lg:flex-row justify-between items-center">
+                                    <div class="mb-6 lg:mr-16 lg:mb-0 text-center lg:text-left lg:w-1/2">
+                                        <h3 class="h3 text-white mb-2">
+                                            Focus on the Value, Not the Noise.
+                                        </h3>
+                                    </div>
+                                    <div
+                                        class="flex flex-col sm:flex-row justify-center max-w-xs mx-auto sm:max-w-md lg:max-w-none">
+                                        <a class="btn text-purple-600 bg-purple-100 hover:bg-white shadow"
+                                            href="#uploadFileSection">START
+                                            SUMMARIZING — IT'S FREE</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </section>
+        </div>
+        <footer>
+            <div class="py-12 md:py-16">
+                <div class="max-w-6xl mx-auto px-4 sm:px-6">
+                    <div class="grid md:grid-cols-12 gap-8 lg:gap-20 mb-8 md:mb-12">
+                        <div class="md:col-span-4 lg:col-span-5">
+                            <div class="mb-2">
+                                <a class="block" aria-label="TLDR This" href="/"><img alt="TLDR This" loading="lazy"
+                                        width="80" height="30" decoding="async" data-nimg="1" style="color: transparent"
+                                        srcset="" src="logo (2).png" /></a>
+                            </div>
+                        </div>
+                        <div class="md:col-span-8 lg:col-span-7 grid sm:grid-cols-3 gap-8">
+                            <div class="text-sm">
+                                <div class="text-gray-200 font-medium mb-1">Company</div>
+                                <ul>
+                                    <li class="mb-1">
+                                        <a class="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out"
+                                            href="#">Privacy
+                                            Policy</a>
+                                    </li>
+                                    <li class="mb-1">
+                                        <a class="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out"
+                                            href="#">Terms</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="text-sm">
+                                <div class="text-gray-200 font-medium mb-1">Developers</div>
+                                <ul>
+                                    <li class="mb-1">
+                                        <a class="text-gray-400 hover:text-gray-100 transition duration-150 ease-in-out"
+                                            target="_blank" href="">API Access</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:flex md:items-center md:justify-between">
+                        <ul class="flex mb-4 md:order-1 md:ml-4 md:mb-0">
+                            <li>
+                                <a class="flex justify-center items-center text-purple-600 bg-gray-800 hover:text-gray-100 hover:bg-purple-600 rounded-full transition duration-150 ease-in-out"
+                                    aria-label="Twitter" target="_black" href="#"><svg class="w-8 h-8 fill-current"
+                                        viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="m13.063 9 3.495 4.475L20.601 9h2.454l-5.359 5.931L24 23h-4.938l-3.866-4.893L10.771 23H8.316l5.735-6.342L8 9h5.063Zm-.74 1.347h-1.457l8.875 11.232h1.36l-8.778-11.232Z">
+                                        </path>
+                                    </svg></a>
+                            </li>
+                            <li class="ml-4">
+                                <a class="flex justify-center items-center text-purple-600 bg-gray-800 hover:text-gray-100 hover:bg-purple-600 rounded-full transition duration-150 ease-in-out"
+                                    aria-label="Facebook" target="_black" href="#"><svg class="w-8 h-8 fill-current"
+                                        viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M14.023 24L14 17h-3v-3h3v-2c0-2.7 1.672-4 4.08-4 1.153 0 2.144.086 2.433.124v2.821h-1.67c-1.31 0-1.563.623-1.563 1.536V14H21l-1 3h-2.72v7h-3.257z">
+                                        </path>
+                                    </svg></a>
+                            </li>
+                            <li class="ml-4">
+                                <a class="flex justify-center items-center text-purple-600 bg-gray-800 hover:text-gray-100 hover:bg-purple-600 rounded-full transition duration-150 ease-in-out"
+                                    aria-label="Linkedin" target="_black" href="#"><svg class="w-8 h-8 fill-current"
+                                        viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M23.3 8H8.7c-.4 0-.7.3-.7.7v14.7c0 .3.3.6.7.6h14.7c.4 0 .7-.3.7-.7V8.7c-.1-.4-.4-.7-.8-.7zM12.7 21.6h-2.3V14h2.4v7.6h-.1zM11.6 13c-.8 0-1.4-.7-1.4-1.4 0-.8.6-1.4 1.4-1.4.8 0 1.4.6 1.4 1.4-.1.7-.7 1.4-1.4 1.4zm10 8.6h-2.4v-3.7c0-.9 0-2-1.2-2s-1.4 1-1.4 2v3.8h-2.4V14h2.3v1c.3-.6 1.1-1.2 2.2-1.2 2.4 0 2.8 1.6 2.8 3.6v4.2h.1z">
+                                        </path>
+                                    </svg></a>
+                            </li>
+                        </ul>
+                        <div class="text-gray-400 text-sm mr-4">
+                            © 2024 TalkBrief, all rights reserved
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+    <span></span>
+
+
+</body>
+
+</html>
 {% endblock %}
-
-<!-- home.html -->
-<!-- <form method="post" enctype="multipart/form-data" action="{% url 'transcribe' %}>
-    {% csrf_token %}
-    <label for="av_url">Enter URL:</label>
-    <input type="text" id="av_url" name="av_url" placeholder="Paste URL here">
-    <br><br>
-    <h3>OR</h3>
-    <br>
-    <label for="file_upload">Upload Audio/Video File:</label>
-    <input type="file" id="file_upload" name="file">
-    <br><br>
-    <input type="submit" value="Transcribe">
-</form> -->
-
-
-
-

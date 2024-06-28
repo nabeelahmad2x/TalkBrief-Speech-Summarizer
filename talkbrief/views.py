@@ -1,15 +1,22 @@
+import os
+#from django.http import HttpResponse
+#from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
-#from django.http import HttpResponse
 
-#from.models import Transcription, Summary
-from.forms import RegisterForm, AuthenticationForm
-#from.forms import TranscriptionForm, SummaryForm
+from.models import UserInfo, Transcriptions, Summaries
+from.forms import RegisterForm
+
+from django.contrib.auth.forms import AuthenticationForm
+from datetime import datetime
 
 from talkbrief.talkbrief_mods.text_summarizer import extract_summary
 from talkbrief.talkbrief_mods.audio_transcriber import extract_audio
 
 
+
+
+# views..
 def home(request):
     return render(request, 'talkbrief/home.html')
 
@@ -20,50 +27,24 @@ def contact(request):
     return render(request, 'talkbrief/contact.html')
 
 
-# def register(request):
-#     if request.method == "POST":
-#         form = UserForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             username = form.cleaned_data.get('username')
-#             raw_password = form.cleaned_data.get('password1')
-#             user = authenticate(username=username, password=raw_password)
-#             login(request, user)
-#             return redirect('home')
-#     else:
-#         form = RegisterForm()
-#     return render(request, 'talkbrief/register.html', {'form': form})
 def register(request):
     if request.method == "POST":
         form = RegisterForm(request.POST)
         if form.is_valid():
-            user = form.save(commit=False)
-            user.email = form.cleaned_data['email']  # Ensure email is saved
-            user.save()
+            # The save method now takes care of setting the password,
+            # so we just call save() directly.
+            user = form.save()
+            
             # Automatically logs the user in
             login(request, user)
             return redirect('home')
     else:
         form = RegisterForm()
+    
     return render(request, 'talkbrief/register.html', {'form': form})
 
 
 
-
-# def login_view(request):
-#     if request.method == 'POST':
-#         form = LoginForm(request.POST)
-#         if form.is_valid():
-#             username = form.cleaned_data['username']
-#             password = form.cleaned_data['password']
-#             user = authenticate(request, username=username, password=password)
-#             if user is not None:
-#                 login(request, user)
-#                 return redirect('home')
-#             else:
-#                 form = LoginForm()    
-#     return render(request, 'talkbrief/login.html', {'form': form})
-#this view is written for built in authentication form..
 def login_view(request):
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
@@ -106,14 +87,29 @@ def transcribe(request):
         av_url_or_file = None
         
         if 'av_url' in request.POST:
-            # User entered a URL
+            # User entered a URL or PATH
             av_url_or_file = request.POST['av_url']
         elif 'file' in request.FILES:
-            # User uploaded a file
             av_url_or_file = request.FILES['file']
-        
+
+
         transcript = extract_audio(av_url_or_file)
-            
+
+        
+        if request.user.is_authenticated:
+            # Fetch the user instance using the user ID
+            user_instance = UserInfo.objects.get(userid=request.user.userid)        
+        
+            # Save the transcription to the database
+            Transcriptions.objects.create(
+            userid=user_instance,  # Assign the user instance, not just the ID
+            file_name_link=av_url_or_file,
+            transcription=transcript.text,
+            time=datetime.now(),  # Current timestamp
+            )
+        else:
+            pass
+                
         # redirect to transcribe.html with the transcription result
         return render(request, 'talkbrief/transcribe.html', {'transcript': transcript.text})
     # will render home.html if the form hasn't been submitted yet
@@ -133,6 +129,8 @@ def summarize(request):
         
         if text:
             summary = extract_summary(text, summary_length)
+
+
             return render(request, 'talkbrief/summarize.html', {'summary': summary})
         else:
             return render(request, 'talkbrief/summarize.html', {'error': 'No text provided.'})

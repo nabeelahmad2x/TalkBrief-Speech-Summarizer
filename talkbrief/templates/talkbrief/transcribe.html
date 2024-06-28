@@ -3,50 +3,81 @@
 {% block title %}Transcription{% endblock %}
 
 {% block content %}
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
-<!-- <h1>Transcription:</h1>
-<p>{{ transcript }}</p>
-<a href="{% url 'home' %}">Back to Home</a> -->
+<style>
+    body {
+        background: #121212;
+        color: #fff;
+    }
+
+    .transcription-container {
+        background: #1e1e1e;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        margin-top: 20px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    h2 {
+        color: rgb(93, 93, 255);
+        text-align: center;
+    }
+
+    p {
+        color: #ccc;
+    }
+
+    .copy-button,
+    .summary-button {
+        background-color: rgb(93, 93, 255);
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        margin-top: 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .copy-button:hover,
+    .summary-button:hover {
+        background-color: rgb(73, 73, 255);
+    }
+</style>
+
 <div class="transcription-container">
     <h2>Transcription of provided audio/video:</h2>
-    <p id="transcriptionText">
-        {{ transcript }}
-    </p>
+    <p id="transcriptionText">{{ transcript }}</p>
     <button class="copy-button" onclick="copyText('transcriptionText')">Copy Transcription</button>
     <form action="{% url 'summarize' %}" method="post">
         {% csrf_token %}
-        <label for="summary_length">Choose Summary Length:</label>
-        <select id="summary_length" name="summary_length" required>
-            <option value="">Select...</option>
-            <option value="35">35%</option>
-            <option value="50">50%</option>
-            <option value="75">75%</option>
-        </select>
-        <input type="hidden" name="transcription" value="{{ transcript }}">        
-        <button class="summary-button" type="submit" value="summarize">Summarize Text</button>
+        <input type="hidden" name="transcription" value="{{ transcript }}">
+        <button class="summary-button" type="submit">Summarize Text</button>
     </form>
 </div>
 
-
-
+<!-- Include Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 <script>
-    // this function copies the transcription text to clipboard using js..
+    // Function to copy transcription text to clipboard
     function copyText(elementId) {
-            // Copy the text content of the specified element to the clipboard
-            var textElement = document.getElementById(elementId);
-            var textToCopy = textElement.innerText || textElement.textContent;
+        var textElement = document.getElementById(elementId);
+        var textToCopy = textElement.innerText || textElement.textContent;
 
-            var textarea = document.createElement('textarea');
-            textarea.value = textToCopy;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
+        var textarea = document.createElement('textarea');
+        textarea.value = textToCopy;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
 
-            alert('Text copied to clipboard!');
+        alert('Text copied to clipboard!');
     }
-
 </script>
-
 {% endblock %}

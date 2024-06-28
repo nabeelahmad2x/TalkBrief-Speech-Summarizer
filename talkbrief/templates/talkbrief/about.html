@@ -3,58 +3,93 @@
 {% block title %}About Us{% endblock %}
 
 {% block content %}
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
 <style>
-    /* General container styling */
-.container {
-    max-width: calc(100% - 30px); /* Subtracting total margin from both sides */
-    margin-left: auto;
-    margin-right: auto;
-}
+    body {
+        background: #121212;
+        color: #fff;
+    }
 
-/* Styling for the team members section */
-#team-members.container {
-    display: flex; /* Display members horizontally */
-    justify-content: space-around; /* Distribute space around items evenly */
-    flex-wrap: wrap; /* Allow wrapping onto next line if screen size is too small */
-}
+    .container {
+        background: #1e1e1e;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        margin-top: 20px;
+    }
 
-.member {
-    text-align: center; /* Center align content within each member div */
-    margin-bottom: 20px; /* Space between rows of members */
-}
+    h1,
+    h2 {
+        color: rgb(93, 93, 255);
+    }
 
-.member img {
-    width: 150px; /* Adjust image size as needed */
-    height: auto; /* Maintain aspect ratio */
-}
+    p {
+        color: #ccc;
+    }
 
+    .organization-image {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto 20px auto;
+        border-radius: 10px;
+    }
+
+    #team-members .member {
+        text-align: center;
+        margin-bottom: 20px;
+    }
+
+    #team-members .member img {
+        width: 150px;
+        height: auto;
+        border-radius: 50%;
+        margin-bottom: 10px;
+    }
+
+    .social-links a {
+        color: #ccc;
+        font-size: 1.5rem;
+        margin: 0 10px;
+        transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    .social-links a:hover {
+        color: rgb(93, 93, 255);
+        transform: scale(1.2);
+    }
 </style>
-<body>
-    <section id="organization-info">
-        <div class="container">
-            {% load static %}
-            <img src="{% static 'talkbrief/images/ucp.jpg' %}" style="max-width: 1260px; max-height: 500px; margin-left: 120px;"  alt="Image of UCP" class="organization-image" >
 
-            
-            <h1>University of Central Punjab.</h1>
-            <p>At the University of Central Punjab, we're proud to be a leading educational institution in Lahore, Pakistan. Since 2002, we've provided a comprehensive range of undergraduate and postgraduate programs, from engineering and computer science to business and social sciences. We believe in fostering well-rounded individuals, so our students enjoy not only modern academic facilities and labs but also a vibrant campus life with sports complexes and entrepreneurship initiatives. Our business school is a particular point of pride, consistently ranking among the top in Lahore. We're also actively engaged in international collaborations, bringing fresh perspectives to our classrooms and research endeavors. If you're seeking a dynamic and enriching educational experience, we invite you to consider UCP! </p>
-        </div>
+<body>
+    <section id="organization-info" class="container">
+        {% load static %}
+        <img src="{% static 'talkbrief/images/ucp.jpg' %}" alt="Image of UCP" class="organization-image">
+        <h1>University of Central Punjab</h1>
+        <p>At the University of Central Punjab, we're proud to be a leading educational institution in Lahore, Pakistan.
+            Since 2002, we've provided a comprehensive range of undergraduate and postgraduate programs, from
+            engineering and computer science to business and social sciences. We believe in fostering well-rounded
+            individuals, so our students enjoy not only modern academic facilities and labs but also a vibrant campus
+            life with sports complexes and entrepreneurship initiatives. Our business school is a particular point of
+            pride, consistently ranking among the top in Lahore. We're also actively engaged in international
+            collaborations, bringing fresh perspectives to our classrooms and research endeavors. If you're seeking a
+            dynamic and enriching educational experience, we invite you to consider UCP!</p>
     </section>
 
-    <section id="team-members">
-        <div class="container">
-            <h2>Main Team Members</h2>
-            <div class="member">
+    <section id="team-members" class="container">
+        <h2>Main Team Members</h2>
+        <div class="row">
+            <div class="col-md-4 member">
                 <img src="path/to/member1-picture.jpg" alt="Nabeel Pic">
                 <h3>Nabeel Ahmad</h3>
                 <p>Role and responsibilities of Member 1.</p>
             </div>
-            <div class="member">
+            <div class="col-md-4 member">
                 <img src="path/to/member2-picture.jpg" alt="Fizzah Pic">
                 <h3>Fizzah Asif</h3>
                 <p>Role and responsibilities of Member 2.</p>
             </div>
-            <div class="member">
+            <div class="col-md-4 member">
                 <img src="path/to/member3-picture.jpg" alt="Ahsan Pic">
                 <h3>Ahsan Ali</h3>
                 <p>Role and responsibilities of Member 3.</p>
@@ -62,10 +97,14 @@
         </div>
     </section>
 
-    <section id="project-challenges">
-        <div class="container">
-            <h2>Overcoming Challenges</h2>
-            <p>Describe the challenges faced during the project and how they were overcome. Include any significant milestones or achievements along the way.</p>
-        </div>
+    <section id="project-challenges" class="container">
+        <h2>Overcoming Challenges</h2>
+        <p>Describe the challenges faced during the project and how they were overcome. Include any significant
+            milestones or achievements along the way.</p>
     </section>
-{% endblock %}
+
+    <!-- Include Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    {% endblock %}

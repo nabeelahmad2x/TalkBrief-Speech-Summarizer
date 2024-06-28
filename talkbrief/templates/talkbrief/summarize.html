@@ -3,26 +3,74 @@
 {% block title %}Summarize{% endblock %}
 
 {% block content %}
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+    body {
+        background: #121212;
+        color: #fff;
+    }
+
+    .summary-container {
+        background: #1e1e1e;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        margin-top: 20px;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    h2 {
+        color: rgb(93, 93, 255);
+        text-align: center;
+    }
+
+    p {
+        color: #ccc;
+    }
+
+    .copy-button {
+        background-color: rgb(93, 93, 255);
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        margin-top: 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .copy-button:hover {
+        background-color: rgb(73, 73, 255);
+    }
+</style>
+
 <div class="summary-container">
     <h2>Summary of given text:</h2>
-    <p id="summaryText"> {{summary}} </p>
+    <p id="summaryText">{{ summary }}</p>
     <button class="copy-button" onclick="copyText('summaryText')">Copy Summary</button>
 </div>
 
+<!-- Include Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
 <script>
     function copyText(elementId) {
-            // Copy the text content of the specified element to the clipboard
-            var textElement = document.getElementById(elementId);
-            var textToCopy = textElement.innerText || textElement.textContent;
+        // Copy the text content of the specified element to the clipboard
+        var textElement = document.getElementById(elementId);
+        var textToCopy = textElement.innerText || textElement.textContent;
 
-            var textarea = document.createElement('textarea');
-            textarea.value = textToCopy;
-            document.body.appendChild(textarea);
-            textarea.select();
-            document.execCommand('copy');
-            document.body.removeChild(textarea);
+        var textarea = document.createElement('textarea');
+        textarea.value = textToCopy;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
 
-            alert('Text copied to clipboard!');
-        }
+        alert('Text copied to clipboard!');
+    }
 </script>
 {% endblock %}

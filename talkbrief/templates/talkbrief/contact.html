@@ -3,30 +3,80 @@
 {% block title %}Contact Us{% endblock %}
 
 {% block content %}
-<section id="contact-section">
-    <div class="container">
+<!-- Include Bootstrap CSS -->
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+    /* Additional Custom Styles */
+    body {
+        background: #121212;
+        color: #fff;
+    }
+
+    #contact-section {
+        background: #1e1e1e;
+        padding: 50px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        transition: all 0.3s ease-in-out;
+    }
+
+    #contact-section h1,
+    #contact-section h2 {
+        color: rgb(93, 93, 255);
+    }
+
+    #contact-section p {
+        color: #ccc;
+    }
+
+    .social-links a {
+        color: #ccc;
+        font-size: 1.5rem;
+        margin: 0 10px;
+        transition: color 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    .social-links a:hover {
+        color: rgb(93, 93, 255);
+        transform: scale(1.2);
+    }
+</style>
+
+<section id="contact-section" class="container mt-5">
+    <div class="text-center mb-4">
         <h1>Contact Us</h1>
         <p>Get in touch with us through our official channels:</p>
-        
+    </div>
+    <div class="row">
         <!-- Address -->
-        <div class="address">
-            <h2>Our Location</h2>
-            <p>123 Main Street, Anytown, USA</p>
+        <div class="col-md-6 mb-4">
+            <div class="bg-dark p-4 rounded">
+                <h2>Our Location</h2>
+                <p>123 Main Street, Anytown, USA</p>
+            </div>
         </div>
-        
+
         <!-- Email -->
-        <div class="email">
-            <h2>Email Us</h2>
-            <p>info@yourdomain.com</p>
-        </div>
-        
-        <!-- Social Media Links -->
-        <div class="social-links">
-            <a href="#"><i class="fab fa-facebook-f"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fas fa-envelope"></i></a>
+        <div class="col-md-6 mb-4">
+            <div class="bg-dark p-4 rounded">
+                <h2>Email Us</h2>
+                <p>info@yourdomain.com</p>
+            </div>
         </div>
     </div>
+
+    <!-- Social Media Links -->
+    <div class="text-center social-links">
+        <a href="#"><i class="fab fa-facebook-f"></i></a>
+        <a href="#"><i class="fab fa-twitter"></i></a>
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fas fa-envelope"></i></a>
+    </div>
 </section>
+
+<!-- Include Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 {% endblock %}

@@ -10,6 +10,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout_view'),
     path('transcribe/', views.transcribe, name='transcribe'),
     path('summarize/', views.summarize, name='summarize'),
+    #path('history/' , views.history, name='history'),
 ]
 
 

@@ -3,10 +3,62 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<h2>Login</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-</form>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+    body {
+        background: #121212;
+        color: #fff;
+    }
+
+    .container {
+        background: #1e1e1e;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        margin-top: 20px;
+        max-width: 500px;
+    }
+
+    h2 {
+        color: rgb(93, 93, 255);
+        text-align: center;
+    }
+
+    .form-group label {
+        color: #ccc;
+    }
+
+    .btn-custom {
+        background-color: rgb(93, 93, 255);
+        color: #fff;
+        border: none;
+        transition: background-color 0.3s ease-in-out;
+    }
+
+    .btn-custom:hover {
+        background-color: rgb(73, 73, 255);
+    }
+</style>
+
+<div class="container">
+    <h2>Login</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.as_p }}         
+        </div>
+        <button type="submit" class="btn btn-custom btn-block">Login</button>
+    </form>
+</div>
+
+<!-- Include Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 {% endblock %}
+
+
+
+
+

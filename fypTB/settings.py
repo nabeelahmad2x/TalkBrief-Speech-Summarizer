@@ -97,7 +97,7 @@ WSGI_APPLICATION = 'fypTB.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql', 
-        'NAME': 'TalkBriefDB',
+        'NAME': 'talkbrief_db1',
         'USER': 'postgres',
         'PASSWORD': 'postgres1234',
         'HOST': 'localhost',  
@@ -105,9 +105,13 @@ DATABASES = {
     }
 }
 
+# user validation
+AUTH_USER_MODEL = 'talkbrief.UserInfo'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
+
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {

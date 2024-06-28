@@ -1,20 +1,50 @@
-# This is an auto-generated Django model module.
-# You'll have to do the following manually to clean this up:
-#   * Rearrange models' order
-#   * Make sure each model has one field with primary_key=True
-#   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
-#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
-# Feel free to rename the models, but don't rename db_table values or field names.
-
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+#from django.contrib.auth.models import User
 #from django_guest_user.models import GuestUser
 
-class UserInfo(models.Model):
+# class UserInfo(models.Model):
+#     userid = models.AutoField(primary_key=True)
+#     username = models.CharField(max_length=30)
+#     email = models.CharField(max_length=255)
+#     password = models.CharField(max_length=255)
+
+# Custom user manager
+class CustomUserManager(BaseUserManager):
+    def create_user(self, username, email, password=None, **extra_fields):
+        if not username:
+            raise ValueError('The Username field must be set')
+        if not email:
+            raise ValueError('The Email field must be set')
+        email = self.normalize_email(email)
+        user = self.model(username=username, email=email, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_superuser(self, username, email, password=None, **extra_fields):
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        return self.create_user(username, email, password, **extra_fields)
+
+# Updated UserInfo model
+class UserInfo(AbstractBaseUser, PermissionsMixin):
     userid = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=30)
-    email = models.CharField(max_length=255)
-    password = models.CharField(max_length=255)
+    username = models.CharField(max_length=30, unique=True)
+    email = models.EmailField(max_length=255, unique=True)
+    password = models.CharField(max_length=128)  # Adjusted for security reasons
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+
+    objects = CustomUserManager()
+
+    USERNAME_FIELD = 'username'
+    EMAIL_FIELD = 'email'
+    REQUIRED_FIELDS = ['email',]
+
+    def __str__(self):
+        return self.username
 
 class Transcriptions(models.Model):
     transcription_id = models.AutoField(primary_key=True)
@@ -23,7 +53,7 @@ class Transcriptions(models.Model):
     transcription = models.TextField(blank=True, null=True)
     time = models.DateTimeField(blank=True, null=True)
     class Meta:
-        managed = False
+        managed = True
         db_table = 'transcriptions'
 
 class Summaries(models.Model):
@@ -32,7 +62,7 @@ class Summaries(models.Model):
     summary = models.TextField(blank=True, null=True)
     time = models.DateTimeField(blank=True, null=True)
     class Meta:
-        managed = False
+        managed = True
         db_table = 'summaries'
 
 

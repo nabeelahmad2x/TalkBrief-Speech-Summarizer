@@ -1,34 +1,122 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
-    {% load static %}  <link rel="stylesheet" href="{% static 'layout.css' %}">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'layout.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: #121212;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+        }
+
+        header {
+            background: #1e1e1e;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header a {
+            color: rgb(93, 93, 255);
+            text-decoration: none;
+            font-size: 2rem;
+        }
+
+        nav a {
+            color: #ccc;
+            margin: 0 10px;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        nav a:hover {
+            color: rgb(93, 93, 255);
+        }
+
+        footer {
+            background: #1e1e1e;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        .footer-columns {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-columns p {
+            margin: 0;
+            color: #ccc;
+        }
+
+        .footer-links {
+            display: flex;
+        }
+
+        .footer-links a {
+            color: rgb(93, 93, 255);
+            margin: 0 10px;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+
+        .submit-btn-cpy {
+            background: none;
+            border: none;
+            padding: 0;
+            color: inherit;
+            font: inherit;
+            cursor: pointer;
+            outline: inherit;
+        }
+    </style>
 </head>
+
 <body>
     <header>
-        <a href="{% url 'home' %}"><h1>TalkBrief</h1></a>
+        <a href="{% url 'home' %}">
+            <h1>TalkBrief</h1>
+        </a>
         <nav>
             {% if user.is_authenticated %}
-                <a href="{% url 'logout_view' %}">Logout</a>
+            <a href="{% url 'logout_view' %}">Logout</a>
             {% else %}
-                <a href="{% url 'login_view' %}">Login</a>
-                <a href="{% url 'register' %}">Signup</a>
+            <a href="{% url 'login_view' %}">Login</a>
+            <a href="{% url 'register' %}">Signup</a>
             {% endif %}
         </nav>
     </header>
 
-    {% block content %}{% endblock %}
+    <main class="container my-5">
+        {% block content %}{% endblock %}
+    </main>
 
     <footer>
         <div class="footer-columns">
             <div>
                 <p>&copy; 2024 TalkBrief. All rights reserved.</p>
             </div>
-            <div class = "footer-links">
+            <div class="footer-links">
                 <button class="submit-btn-cpy"><a href="{% url 'about' %}">About Us</a></button>
                 <button class="submit-btn-cpy"><a href="{% url 'contact' %}">Contact Us</a></button>
             </div>
         </div>
     </footer>
+
+    <!-- Include Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>

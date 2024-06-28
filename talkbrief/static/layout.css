@@ -12,8 +12,6 @@ body {
     background: url('your-background-image.jpg') no-repeat center center fixed;
     background-size: cover;
     /* Adjust background properties as needed */
-    margin-bottom: 50px; /* Adjust based on the height of your footer */
-    padding-bottom: 50px; /* Same as margin-bottom */
 }
 
 header {
@@ -35,7 +33,6 @@ nav a {
     color: #fff;
     margin: 0 10px;
 }
-
 
 footer {
     background-color: #333;
