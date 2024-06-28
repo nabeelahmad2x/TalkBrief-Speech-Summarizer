@@ -54,8 +54,15 @@
     <button class="copy-button" onclick="copyText('transcriptionText')">Copy Transcription</button>
     <form action="{% url 'summarize' %}" method="post">
         {% csrf_token %}
-        <input type="hidden" name="transcription" value="{{ transcript }}">
-        <button class="summary-button" type="submit">Summarize Text</button>
+        <label for="summary_length">Choose Summary Length:</label>
+        <select id="summary_length" name="summary_length" required>
+            <option value="">Select...</option>
+            <option value="35">35%</option>
+            <option value="50">50%</option>
+            <option value="75">75%</option>
+        </select>
+        <input type="hidden" name="transcription" value="{{ transcript }}">        
+        <button class="summary-button" type="submit" value="summarize">Summarize Text</button>
     </form>
 </div>
 

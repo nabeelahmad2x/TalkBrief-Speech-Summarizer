@@ -1,7 +1,7 @@
 from django import forms
 #from django.contrib.auth.models import User
 #from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.contrib.auth.forms import AuthenticationForm
+
 from.models import UserInfo, Transcriptions, Summaries
 
 # class UserForm(forms.ModelForm):
@@ -60,8 +60,6 @@ class TranscriptionForm(forms.ModelForm):
         model = Transcriptions
         fields = ['file_name_link', 'transcription', 'userid']
 
-
-
 # class SummaryForm(forms.ModelForm):
 #     class Meta:
 #         model = Summaries
@@ -71,6 +69,9 @@ class SummaryForm(forms.ModelForm):
     class Meta:
         model = Summaries
         fields = ['transcription', 'summary']
+
+class FileUploadForm(forms.Form):
+    file = forms.FileField()
 
 
 class MediaForm(forms.Form):

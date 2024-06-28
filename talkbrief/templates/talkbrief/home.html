@@ -345,7 +345,7 @@
                 </div>
             </section>
 
-            <div class="container">
+            <!-- <div class="container">
                 <div class="form-container">
                     <form action="{% url 'transcribe' %}" method="post" enctype="multipart/form-data">
                         {% csrf_token %}
@@ -356,7 +356,7 @@
                         <input type="file" id="file_upload" name="file">
                         <br><br>    
                         <input type="submit" value="Transcribe">    
-                        <input type="hidden" id="file_path" name="file_path">
+                         <input type="hidden" id="file_path" name="file_path"> 
                     </form>
                 </div>
         
@@ -379,7 +379,229 @@
                         <input type="submit" value="Summarize Text">
                     </form>
                 </div>
+            </div> -->
+
+
+
+            <style>
+                /* Tailwind CSS equivalent styles */
+                .container {
+                    margin-top: 7rem;
+                    margin-bottom: 3.75rem;
+                    max-width: 1024px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: center;
+                    width: 75%;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+
+                .form-container {
+                    width: 100%;
+                    padding-top: 1rem;
+                    padding-bottom: 1.5rem;
+                    padding-left: 2rem;
+                    padding-right: 2rem;
+                    margin-bottom: 2.5rem;
+                    border: 0px dashed #e6e3ef;
+                    background-color: rgb(51 54 58);
+                    border-radius: 1rem;
+                    max-width: 600px;
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+
+                .form-container label {
+                    color: #E5E7EB;
+                    font-size: 1.125rem;
+                    margin-bottom: 0.5rem;
+                    display: block;
+                }
+
+                .form-container input[type="text"],
+                .form-container input[type="file"],
+                .form-container textarea,
+                .form-container select {
+                    width: 100%;
+                    padding: 0.5rem;
+                    border: 1px solid #4B5563;
+                    border-radius: 0.375rem;
+                    margin-bottom: 1rem;
+                }
+
+                .form-container input[type="submit"],
+                .form-container button {
+                    padding: 0.75rem 1.5rem;
+                    background-color: rgb(93, 93, 255);
+                    color: #FFFFFF;
+                    border: none;
+                    border-radius: 0.375rem;
+                    cursor: pointer;
+                    font-weight: 600;
+                    margin-top: 1rem;
+                    width: 100%;
+                }
+
+                .form-container input[type="submit"]:hover,
+                .form-container button:hover {
+                    background-color: #5d5dff;
+                }
+
+                h1 {
+                    color: rgb(93, 93, 255);
+                    font-size: 2rem;
+                    text-align: center;
+                    margin: 2rem 0;
+                }
+
+                .button-group {
+                    display: flex;
+                    justify-content: center;
+                    gap: 1rem;
+                    margin-bottom: 1.5rem;
+                }
+
+                .hidden {
+                    display: none;
+                }
+            </style>
+            <script>
+                function showSection(sectionId) {
+                    document.getElementById('fileUploadSection').classList.add('hidden');
+                    document.getElementById('urlSection').classList.add('hidden');
+                    document.getElementById('textSection').classList.add('hidden');
+
+                    document.getElementById(sectionId).classList.remove('hidden');
+                }
+            </script>
+            <div class="container">
+                <h3 class="h3 mb-4 text-zinc-200">Enter an Article URL or paste your Text</h3>
+                <div class="button-group ">
+                    <button
+                        class="py-2.5 px-5 flex-col items-center inline-flex font-medium bg-purple-600 text-base text-white"
+                        onclick="showSection('fileUploadSection')">Upload file</button>
+                    <button
+                        class="py-2.5 px-5 flex-col items-center inline-flex font-medium bg-purple-600 text-base text-white"
+                        onclick="showSection('urlSection')">Add URL</button>
+                    <button
+                        class="py-2.5 px-5 flex-col items-center inline-flex font-medium bg-purple-600 text-base text-white"
+                        onclick="showSection('textSection')">Add text</button>
+                </div>
+                <div id="fileUploadSection" class="form-container hidden">
+                    <form action="{% url 'transcribe' %}" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <label for="file_upload">Upload File:</label>
+                        <input type="file" id="file_upload" name="file">
+                        <br><br>
+                        <input type="hidden" id="file_path" name="file_path">
+                        <input type="submit" value="Transcribe">
+                    </form>
+                </div>
+
+                <div id="urlSection" class="form-container hidden">
+                    <form action="{% url 'transcribe' %}" method="post">
+                        {% csrf_token %}
+                        <label for="av_url">Enter Audio/Video URL:</label>
+                        <input type="text" id="av_url" name="av_url" placeholder="Paste URL here">
+                        <br><br>
+                        <input type="hidden" id="file_path" name="file_path">
+                        <input type="submit" value="Transcribe">
+                    </form>
+                </div>
+
+                <div id="textSection" class="form-container hidden">
+                    <form action="{% url 'summarize' %}" method="post">
+                        {% csrf_token %}
+                        <label for="user_text">Enter Text to summarize:</label><br>
+                        <textarea id="user_text" name="user_text" placeholder="Paste your text here." rows="15"
+                            cols="80"></textarea>
+                        <br>
+                        <label for="summary_length">Choose Summary Length:</label>
+                        <select id="summary_length" name="summary_length" required>
+                            <option value="">Select...</option>
+                            <option value="35">35%</option>
+                            <option value="50">50%</option>
+                            <option value="75">75%</option>
+                        </select>
+                        <br>
+                        <input type="submit" value="Summarize Text">
+                    </form>
+                </div>
             </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             <style>
@@ -387,102 +609,6 @@
                     background-color: rgb(94, 94, 236) !important;
                 }
             </style>
-
-            <script>
-                const uploadFileButton = document.getElementById('uploadFileButton');
-                const addUrlButton = document.getElementById('addUrlButton');
-                const addTextButton = document.getElementById('addTextButton');
-                const fileInput = document.getElementById('fileInput');
-                const fileUploadSection = document.getElementById('fileUploadSection');
-                const urlSection = document.getElementById('urlSection');
-                const textSection = document.getElementById('textSection');
-
-                function resetButtonColors() {
-                    uploadFileButton.classList.remove('active');
-                    addUrlButton.classList.remove('active');
-                    addTextButton.classList.remove('active');
-
-                    uploadFileButton.classList.add('bg-gray-700');
-                    addUrlButton.classList.add('bg-gray-700');
-                    addTextButton.classList.add('bg-gray-700');
-                }
-
-                function activateButton(button) {
-                    resetButtonColors();
-                    button.classList.add('active');
-                    button.classList.remove('bg-gray-700');
-                }
-
-                uploadFileButton.addEventListener('click', function () {
-                    activateButton(uploadFileButton);
-                    fileUploadSection.style.display = 'block';
-                    urlSection.style.display = 'none';
-                    textSection.style.display = 'none';
-                    fileInput.click(); // Trigger the file input click
-                });
-
-                addUrlButton.addEventListener('click', function () {
-                    activateButton(addUrlButton);
-                    fileUploadSection.style.display = 'none';
-                    urlSection.style.display = 'block';
-                    textSection.style.display = 'none';
-                });
-
-                addTextButton.addEventListener('click', function () {
-                    activateButton(addTextButton);
-                    fileUploadSection.style.display = 'none';
-                    urlSection.style.display = 'none';
-                    textSection.style.display = 'block';
-                });
-            </script>
-
-            <script>
-                const uploadFileButton = document.getElementById('uploadFileButton');
-                const addUrlButton = document.getElementById('addUrlButton');
-                const addTextButton = document.getElementById('addTextButton');
-                const fileInput = document.getElementById('fileInput');
-                const fileUploadSection = document.getElementById('fileUploadSection');
-                const urlSection = document.getElementById('urlSection');
-                const textSection = document.getElementById('textSection');
-
-                function resetButtonColors() {
-                    uploadFileButton.classList.remove('active');
-                    addUrlButton.classList.remove('active');
-                    addTextButton.classList.remove('active');
-
-                    uploadFileButton.classList.add('bg-gray-700');
-                    addUrlButton.classList.add('bg-gray-700');
-                    addTextButton.classList.add('bg-gray-700');
-                }
-
-                uploadFileButton.addEventListener('click', function () {
-                    resetButtonColors();
-                    uploadFileButton.classList.add('active');
-                    fileUploadSection.style.display = 'block';
-                    urlSection.style.display = 'none';
-                    textSection.style.display = 'none';
-                    fileInput.click(); // Trigger the file input click
-                });
-
-                addUrlButton.addEventListener('click', function () {
-                    resetButtonColors();
-                    addUrlButton.classList.add('active');
-                    fileUploadSection.style.display = 'none';
-                    urlSection.style.display = 'block';
-                    textSection.style.display = 'none';
-                });
-
-                addTextButton.addEventListener('click', function () {
-                    resetButtonColors();
-                    addTextButton.classList.add('active');
-                    fileUploadSection.style.display = 'none';
-                    urlSection.style.display = 'none';
-                    textSection.style.display = 'block';
-                });
-            </script>
-
-
-
 
 
             <section id="mainFeatures" class="relative w-full mb-24">

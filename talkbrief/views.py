@@ -3,9 +3,10 @@ import os
 #from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
+from django.core.files.storage import FileSystemStorage
 
 from.models import UserInfo, Transcriptions, Summaries
-from.forms import RegisterForm
+from.forms import RegisterForm, FileUploadForm
 
 from django.contrib.auth.forms import AuthenticationForm
 from datetime import datetime
@@ -89,8 +90,15 @@ def transcribe(request):
         if 'av_url' in request.POST:
             # User entered a URL or PATH
             av_url_or_file = request.POST['av_url']
-        elif 'file' in request.FILES:
-            av_url_or_file = request.FILES['file']
+        elif 'file' in request.FILES and request.FILES['file']:
+            uploaded_file = request.FILES['file']
+            fs = FileSystemStorage()
+            filename = fs.save(uploaded_file.name, uploaded_file)
+            av_url_or_file = fs.url(filename)
+
+        # Debugging: Check if the file is received and saved correctly
+            print(f"File received: {uploaded_file.name}")
+            print(f"Saved file path: {fs.url(filename)}")
 
 
         transcript = extract_audio(av_url_or_file)
@@ -129,8 +137,6 @@ def summarize(request):
         
         if text:
             summary = extract_summary(text, summary_length)
-
-
             return render(request, 'talkbrief/summarize.html', {'summary': summary})
         else:
             return render(request, 'talkbrief/summarize.html', {'error': 'No text provided.'})
