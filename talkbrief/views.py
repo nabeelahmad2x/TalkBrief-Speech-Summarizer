@@ -92,13 +92,14 @@ def transcribe(request):
             av_url_or_file = request.POST['av_url']
         elif 'file' in request.FILES and request.FILES['file']:
             uploaded_file = request.FILES['file']
+            # print(uploaded_file)
             fs = FileSystemStorage()
+            # print(fs)
             filename = fs.save(uploaded_file.name, uploaded_file)
             av_url_or_file = fs.url(filename)
+            av_url_or_file = av_url_or_file[1:]
+            # print(av_url_or_file)
 
-        # Debugging: Check if the file is received and saved correctly
-            print(f"File received: {uploaded_file.name}")
-            print(f"Saved file path: {fs.url(filename)}")
 
 
         transcript = extract_audio(av_url_or_file)

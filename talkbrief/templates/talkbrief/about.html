@@ -39,6 +39,9 @@
     #team-members .member {
         text-align: center;
         margin-bottom: 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     #team-members .member img {
@@ -64,7 +67,7 @@
 <body>
     <section id="organization-info" class="container">
         {% load static %}
-        <img src="{% static 'talkbrief/images/ucp.jpg' %}" alt="Image of UCP" class="organization-image">
+        <img src="{% static 'talkbrief/images/ucp2.png' %}" alt="Image of UCP" class="organization-image">
         <h1>University of Central Punjab</h1>
         <p>At the University of Central Punjab, we're proud to be a leading educational institution in Lahore, Pakistan.
             Since 2002, we've provided a comprehensive range of undergraduate and postgraduate programs, from
@@ -80,27 +83,37 @@
         <h2>Main Team Members</h2>
         <div class="row">
             <div class="col-md-4 member">
-                <img src="path/to/member1-picture.jpg" alt="Nabeel Pic">
+                {% load static %}
+                <img src="{% static 'talkbrief/images/member3.jpg' %}" alt="Member 1 Pic">
                 <h3>Nabeel Ahmad</h3>
-                <p>Role and responsibilities of Member 1.</p>
+                <h4>Backend Developer</h4>
+                <!-- <p>Role and responsibilities of Member 1.</p> -->
             </div>
             <div class="col-md-4 member">
-                <img src="path/to/member2-picture.jpg" alt="Fizzah Pic">
+                {% load static %}
+                <img src="{% static 'talkbrief/images/member3.jpg' %}" alt="Member 2 Pic">
                 <h3>Fizzah Asif</h3>
-                <p>Role and responsibilities of Member 2.</p>
+                <h4>Models & Algo</h4>
+                <!-- <p>Role and responsibilities of Member 1.</p> -->               
             </div>
             <div class="col-md-4 member">
-                <img src="path/to/member3-picture.jpg" alt="Ahsan Pic">
+                {% load static %}
+                <img src="{% static 'talkbrief/images/member3.jpg' %}" alt="Member 3 Pic">
                 <h3>Ahsan Ali</h3>
-                <p>Role and responsibilities of Member 3.</p>
+                <h4>Frontend Developer</h4>
+                <!-- <p>Role and responsibilities of Member 1.</p> -->
             </div>
         </div>
     </section>
 
     <section id="project-challenges" class="container">
         <h2>Overcoming Challenges</h2>
-        <p>Describe the challenges faced during the project and how they were overcome. Include any significant
-            milestones or achievements along the way.</p>
+        <p>These are some of the challenges we overcame during the development of our first app:
+            <br>1. Successfully integrated multiple third-party APIs for enhanced functionality.
+            <br>2. Ensured a uniform and user-friendly interface across various devices and screen sizes.
+            <br>3. Identified and resolved critical bugs that could have affected the user experience.
+            <br>4. Maintained effective communication and collaboration among team members despite remote working conditions.
+        </p>
     </section>
 
     <!-- Include Bootstrap JS and dependencies -->

@@ -13,6 +13,7 @@ def extract_audio(av_url_or_file):
     if isinstance(av_url_or_file, str):
         # It's an online link
         transcript = transcriber.transcribe(av_url_or_file)
+        
     else:
         # It's a local file
         with open(av_url_or_file.name, 'rb') as f:
