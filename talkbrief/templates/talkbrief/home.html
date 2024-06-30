@@ -437,7 +437,7 @@
                     <div class="max-w-xs mx-auto sm:max-w-none sm:flex sm:justify-center">
                         <div data-aos="fade-up" data-aos-delay="400">
                             <a class="btn text-white bg-purple-600 hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0"
-                                href="#fileUploadSection">SUMMARIZE NOW - IT'S FREE</a>
+                                href="#workSection">SUMMARIZE NOW - IT'S FREE</a>
                         </div>
                     </div>
                 </div>
@@ -487,21 +487,13 @@
                 </script>
 
 
-
-
-
-
-
-
-
-
-                <div class="relative flex justify-center items-center" data-aos="fade-up" data-aos-delay="200">
+                <!-- <div class="relative flex justify-center items-center" data-aos="fade-up" data-aos-delay="200">
                     <video width="1024" height="576" loop="" controls="" muted="" autoplay=""
                         poster="images/comparison.jpg">
                         <source src="videos/tldrthisMainVideo.mp4" type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
-                </div>
+                </div> -->
             </div>
         </section>
         <section class="md:container mt-10 mb-16">
@@ -609,7 +601,8 @@
                 document.getElementById(sectionId).classList.remove('hidden');
             }
         </script>
-        <div class="text-black container border-gray-700 focus:border-gray-500 border-2 rounded-lg">
+        <div class="text-black container border-gray-700 focus:border-gray-500 border-2 rounded-lg" id="workSection">
+            <br><br>
             <h3 class="h3 mb-4 text-zinc-200">Enter an Article URL or paste your Text</h3>
             <div class="button-group  ">
                 <button
@@ -629,7 +622,7 @@
                     <input type="file" id="file_upload" name="file">
                     <br><br>
                     <input type="hidden" id="file_path" name="file_path">
-                    <input type="submit" value="Transcribe">
+                    <input type="submit" value="Transcribe"> 
                 </form>
             </div>
 
@@ -662,6 +655,7 @@
                     <input type="submit" value="Summarize Text">
                 </form>
             </div>
+            <br><br>
         </div>
 
         <style>
@@ -992,7 +986,7 @@
                                 <div
                                     class="flex flex-col sm:flex-row justify-center max-w-xs mx-auto sm:max-w-md lg:max-w-none">
                                     <a class="btn text-purple-600 bg-purple-100 hover:bg-white shadow"
-                                        href="#uploadFileSection">START
+                                        href="#workSection">START
                                         SUMMARIZING — IT'S FREE</a>
                                 </div>
                             </div>
