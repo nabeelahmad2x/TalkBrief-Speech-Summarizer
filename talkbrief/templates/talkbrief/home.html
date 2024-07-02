@@ -641,7 +641,7 @@
                 <form action="{% url 'summarize' %}" method="post">
                     {% csrf_token %}
                     <label for="user_text">Enter Text to summarize:</label><br>
-                    <textarea id="user_text" name="user_text" placeholder="Paste your text here." rows="15"
+                    <textarea id="user_text" name="user_text" placeholder="Paste your text here." rows="10"
                         cols="80"></textarea>
                     <br>
                     <label for="summary_length">Choose Summary Length:</label>

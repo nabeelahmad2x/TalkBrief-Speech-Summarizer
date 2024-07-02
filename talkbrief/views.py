@@ -1,15 +1,16 @@
 import os
+import shutil
+from datetime import datetime
 #from django.http import HttpResponse
 #from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, logout
+from django.contrib.auth.forms import AuthenticationForm
 from django.core.files.storage import FileSystemStorage
+from django.conf import settings  # Import settings
 
 from.models import UserInfo, Transcriptions, Summaries
 from.forms import RegisterForm, FileUploadForm
-
-from django.contrib.auth.forms import AuthenticationForm
-from datetime import datetime
 
 from talkbrief.talkbrief_mods.text_summarizer import extract_summary
 from talkbrief.talkbrief_mods.audio_transcriber import extract_audio
@@ -92,16 +93,14 @@ def transcribe(request):
             av_url_or_file = request.POST['av_url']
         elif 'file' in request.FILES and request.FILES['file']:
             uploaded_file = request.FILES['file']
-            # print(uploaded_file)
             fs = FileSystemStorage()
-            # print(fs)
             filename = fs.save(uploaded_file.name, uploaded_file)
             av_url_or_file = fs.url(filename)
             av_url_or_file = av_url_or_file[1:]
             # print(av_url_or_file)
 
 
-
+        # calling function in audio_transcriber module to transcrbe the audio/video..
         transcript = extract_audio(av_url_or_file)
 
         
@@ -118,6 +117,17 @@ def transcribe(request):
             )
         else:
             pass
+
+
+
+
+        # delete the uploaded file in project directory after transcription
+        if av_url_or_file:
+            file_path = os.path.join(settings.MEDIA_ROOT, av_url_or_file)
+            if os.path.exists(file_path):
+                os.remove(file_path)
+
+
                 
         # redirect to transcribe.html with the transcription result
         return render(request, 'talkbrief/transcribe.html', {'transcript': transcript.text})
@@ -142,13 +152,4 @@ def summarize(request):
         else:
             return render(request, 'talkbrief/summarize.html', {'error': 'No text provided.'})
     else:
-        return render(request, 'talkbrief/transcribe.html') 
-
-    #to check if view is recieving data from transcribe template
-    # if request.method == 'POST':
-    #     transcription = request.POST.get('transcription', '')
-    #     # Process the transcription here
-    #     return HttpResponse("Transcription received.")
-    # else:
-    #     return HttpResponse("Invalid request.")
-    
+        return render(request, 'talkbrief/transcribe.html')     

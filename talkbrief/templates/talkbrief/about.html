@@ -36,6 +36,19 @@
         border-radius: 10px;
     }
 
+
+    #team-members {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #team-members .row {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
     #team-members .member {
         text-align: center;
         margin-bottom: 20px;
@@ -43,6 +56,18 @@
         flex-direction: column;
         align-items: center;
     }
+
+    #team-members .member:nth-child(1) {
+        order: -1;
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+
+    #team-members .member:nth-child(n+2) {
+        flex: 0 0 33.33%;
+        max-width: 33.33%;
+    }
+
 
     #team-members .member img {
         width: 150px;
@@ -79,9 +104,18 @@
             dynamic and enriching educational experience, we invite you to consider UCP!</p>
     </section>
 
+
+
     <section id="team-members" class="container">
-        <h2>Main Team Members</h2>
+        <h2>Main Team Members</h2><br>
         <div class="row">
+            <div class="col-md-4 member">
+                {% load static %}
+                <img src="{% static 'talkbrief/images/member3.jpg' %}" alt="Project Manager Pic">
+                <h3>M. Umar Hameed</h3>
+                <h4>Project Advisor</h4>
+                <!-- <p>Role and responsibilities of Member 1.</p> -->
+            </div>
             <div class="col-md-4 member">
                 {% load static %}
                 <img src="{% static 'talkbrief/images/member3.jpg' %}" alt="Member 1 Pic">
@@ -94,7 +128,7 @@
                 <img src="{% static 'talkbrief/images/member3.jpg' %}" alt="Member 2 Pic">
                 <h3>Fizzah Asif</h3>
                 <h4>Models & Algo</h4>
-                <!-- <p>Role and responsibilities of Member 1.</p> -->               
+                <!-- <p>Role and responsibilities of Member 1.</p> -->
             </div>
             <div class="col-md-4 member">
                 {% load static %}
@@ -112,7 +146,8 @@
             <br>1. Successfully integrated multiple third-party APIs for enhanced functionality.
             <br>2. Ensured a uniform and user-friendly interface across various devices and screen sizes.
             <br>3. Identified and resolved critical bugs that could have affected the user experience.
-            <br>4. Maintained effective communication and collaboration among team members despite remote working conditions.
+            <br>4. Maintained effective communication and collaboration among team members despite remote working
+            conditions.
         </p>
     </section>
 

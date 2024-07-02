@@ -55,7 +55,7 @@
     <form action="{% url 'summarize' %}" method="post">
         {% csrf_token %}
         <label for="summary_length">Choose Summary Length:</label>
-        <select id="summary_length" name="summary_length" required>
+        <select class="text-black" id="summary_length" name="summary_length" required>
             <option value="">Select...</option>
             <option value="35">35%</option>
             <option value="50">50%</option>
