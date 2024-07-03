@@ -8,110 +8,60 @@
     {% load static %}
     <!-- <link rel="stylesheet" href="{% static 'layout.css' %}"> -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- Include Bootstrap CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Include Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
     <link rel="stylesheet" href="../../static/homestyle.css">
-    <!-- <style>
-        header {
-            padding: 0.75rem 0;
-        }
-
-        .navbar {
-            max-width: 6xl;
-            margin-left: auto;
-            margin-right: auto;
-            padding-left: 1rem;
-            padding-right: 1rem;
-            display: flex;
-            align-items: center;
-        }
-
-        @media (min-width: 640px) {
-            .navbar {
-                padding-left: 1.5rem;
-                padding-right: 1.5rem;
-            }
-        }
-
-        .navbar-center {
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-            color: rgb(93, 93, 255);
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .navbar-brand img {
-            height: 40px;
-            margin-right: 0.5rem;
-        }
-
-        .navbar-nav .nav-link {
-            color: #fff !important;
-            font-weight: 500;
-            padding: 0.75rem 1rem;
-        }
-
-        .navbar-nav .nav-link:hover {
-            color: rgb(93, 93, 255) !important;
-        }
-
-        .navbar-toggler {
-            border: none;
-        }
-
-        .navbar-toggler-icon {
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%2855, 55, 55, 0.5%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-        }
-
-        .btn-custom {
-            color: #fff !important;
-            background-color: #5D5DFF !important;
-            border: none;
-            font-weight: 500;
-            padding: 0.75rem 1.25rem;
-            margin-left: 0.5rem;
-        }
-
-        .btn-custom:hover {
-            background-color: #4A4ABF !important;
-        }
-    </style> -->
 </head>
 
 <body>
-    <!-- <header style="background-color: transparent;">
-        <nav class="navbar navbar-expand-lg navbar-dark">
+   
+    <header style="background-color: transparent;">
+        <!-- <nav class="navbar navbar-expand-lg navbar-dark">
             <a class="navbar-brand" href="{% url 'home' %}">
-                <img src=" " alt="">
-                TalkBrief
+                <img src="{% static 'talkbrief/images/logo2.png' %}" alt="TalkBrief Logo" width="80" height="30">
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse navbar-center" id="navbarNav">
+        
+            <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
-                    {% if user.is_authenticated %}
                     <li class="nav-item">
-                        <a class="btn btn-custom nav-link" href="{% url 'logout_view' %}">Logout</a>
+                        <a class="nav-link text-gray-300 hover:text-gray-200 px-4 py-2 flex items-center transition duration-150 ease-in-out" href="../#mainFeatures">Features</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-gray-300 hover:text-gray-200 px-4 py-2 flex items-center transition duration-150 ease-in-out" href="../contact">Support</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-gray-300 hover:text-gray-200 px-4 py-2 flex items-center transition duration-150 ease-in-out" href="../about">About Us</a>
+                    </li>
+        
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-gray-300 hover:text-gray-200" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ user.username }}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{% url 'history' %}">See History</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'logout_view' %}">Logout</a>
+                        </div>
                     </li>
                     {% else %}
                     <li class="nav-item">
-                        <a class="btn btn-custom nav-link" href="{% url 'login_view' %}">Login</a>
+                        <a class="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3" href="{% url 'login_view' %}">Log in</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-custom nav-link" href="{% url 'register' %}">Signup</a>
+                        <a class="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3" href="{% url 'register' %}">Sign up</a>
                     </li>
                     {% endif %}
                 </ul>
             </div>
-        </nav>
-    </header> -->
-    <header style="background-color: transparent;">
+        </nav> -->
+        
         <nav class="navbar navbar-expand-lg navbar-dark">
             <a class="navbar-brand" href="{% url 'home' %}">
                 <img src=" " alt="">
@@ -143,20 +93,24 @@
             </ul>
             <ul class="flex grow justify-end flex-wrap items-center">
                 {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3"
-                        href="{% url 'logout_view' %}">Log out</a>
-                </li>
-                {% else %}
-                <li class="nav-item">
-                    <a class="font-medium text-purple-600 hover:text-gray-200 px-4 py-3 flex items-center transition duration-150 ease-in-out"
-                        href="{% url 'login_view' %}">Log in</a>
-                </li>
-                <li class="nav-item">
-                    <a class="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3" href="{% url 'register' %}">Sign
-                        up</a>
-                </li>
-                {% endif %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-gray-300 hover:text-gray-200" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{ user.username }}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{% url 'history' %}">See History</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="{% url 'logout_view' %}">Logout</a>
+                        </div>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3" href="{% url 'login_view' %}">Log in</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="btn-sm text-white bg-purple-600 hover:bg-purple-700 ml-3" href="{% url 'register' %}">Sign up</a>
+                    </li>
+                    {% endif %}
             </ul>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -164,7 +118,7 @@
             </button>
             <div class="collapse navbar-collapse navbar-center" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
-                    <!-- {% if user.is_authenticated %}
+                  <!-- /////////////////  comment from here {% if user.is_authenticated %}
                     <li class="nav-item">
                         <a class="btn btn-custom nav-link" href="{% url 'logout_view' %}">Logout</a>
                     </li>
@@ -175,7 +129,7 @@
                     <li class="nav-item">
                         <a class="btn btn-custom nav-link" href="{% url 'register' %}">Signup</a>
                     </li>
-                    {% endif %} -->
+                    {% endif %} to here//////////////// -->
                 </ul>
             </div>
         </nav>
@@ -199,7 +153,7 @@
                         <div class="mb-2">                          
                                        
                             <a class="block" aria-label="TLDR This" href="/">
-                                {% load static %}<img alt="TLDR This" loading="lazy"
+                                {% load static %}<img alt="TalkBrief Logo" loading="lazy"
                                     width="80" height="30" decoding="async" data-nimg="1" style="color: transparent"
                                     srcset="" src="{% static 'talkbrief/images/logo2.png' %}"/>
                             </a>

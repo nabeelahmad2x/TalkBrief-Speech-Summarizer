@@ -13,9 +13,8 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout_view'),
     path('transcribe/', views.transcribe, name='transcribe'),
     path('summarize/', views.summarize, name='summarize'),
-    #path('history/' , views.history, name='history'),
+    path('history/' , views.history, name='history'),
 ] 
-#+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

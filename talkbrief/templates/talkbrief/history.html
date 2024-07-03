@@ -1,0 +1,130 @@
+{% extends "talkbrief/base.html" %}
+
+{% block title %}History{% endblock %}
+
+
+
+
+{% block content %}
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<style>
+    /* Additional Custom Styles */
+    body {
+        background: #121212;
+        color: #fff;
+    }
+
+    #history-section {
+        background: #1e1e1e;
+        padding: 50px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        transition: all 0.3s ease-in-out;
+    }
+
+    #history-section h1,
+    #history-section h2 {
+        color: rgb(93, 93, 255);
+    }
+
+    #history-section p {
+        color: #ccc;
+    }
+
+    .history-item {
+        margin-bottom: 20px;
+    }
+
+    .history-item .bg-dark {
+        background: #2a2a2a;
+        padding: 20px;
+        border-radius: 10px;
+    }
+
+    .history-item h2 {
+        color: rgb(93, 93, 255);
+    }
+
+    .history-item p {
+        color: #ccc;
+    }
+</style>
+<section id="contact-section" class="container mt-5">
+    <div class="text-center mb-4">
+        <h1>Your Transcriptions and Summaries History</h1>
+        <p>Below is a history of your transcriptions and their corresponding summaries:</p>
+    </div>
+
+    {% if history_data %}
+        {% for item in history_data %}
+            <div class="row mb-4">
+                <div class="col-md-6 mb-4">
+                    <div class="bg-dark p-4 rounded">
+                        <h2>Transcription</h2>
+                        {% if item.transcription.transcription|length > 150 %}
+                            <div id="transcriptionContent{{ forloop.counter }}">
+                                <p>
+                                    {% autoescape off %}
+                                    {{ item.transcription.transcription|safe|truncatechars_html:150 }}
+                                    {% endautoescape %}
+                                </p>
+                                <div class="collapse" id="transcriptionCollapse{{ forloop.counter }}">
+                                    <p>{{ item.transcription.transcription }}</p>
+                                </div>
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#transcriptionCollapse{{ forloop.counter }}" aria-expanded="false" aria-controls="transcriptionCollapse{{ forloop.counter }}" onclick="toggleButton('transcriptionContent{{ forloop.counter }}')">
+                                    See more
+                                </button>
+                            </div>
+                        {% else %}
+                            <p>{{ item.transcription.transcription }}</p>
+                        {% endif %}
+                        <br>
+                        <p>Uploaded on: {{ item.transcription.time }}</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <div class="bg-dark p-4 rounded">
+                        <h2>Summary</h2>
+                        {% if item.summary.summary|length > 150 %}
+                            <div id="summaryContent{{ forloop.counter }}">
+                                <p>
+                                    {% autoescape off %}
+                                    {{ item.summary.summary|safe|truncatechars_html:150 }}
+                                    {% endautoescape %}
+                                </p>
+                                <div class="collapse" id="summaryCollapse{{ forloop.counter }}">
+                                    <p>{{ item.summary.summary }}</p>
+                                </div>
+                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#summaryCollapse{{ forloop.counter }}" aria-expanded="false" aria-controls="summaryCollapse{{ forloop.counter }}" onclick="toggleButton('summaryContent{{ forloop.counter }}')">
+                                    See more
+                                </button>
+                            </div>
+                        {% else %}
+                            <p>{{ item.summary.summary }}</p>
+                        {% endif %}
+                        <br>
+                        <p>Summarized on: {{ item.summary.time }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-warning" role="alert">
+            No history available.
+        </div>
+    {% endif %}
+</section>
+
+<script>
+    function toggleButton(contentId) {
+        var content = document.getElementById(contentId);
+        if (content) {
+            var button = content.querySelector('button');
+            if (button) {
+                button.style.display = 'none';
+            }
+        }
+    }
+</script>
+{% endblock %}

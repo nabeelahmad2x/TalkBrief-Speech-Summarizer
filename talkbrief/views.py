@@ -1,5 +1,5 @@
 import os
-import shutil
+#import shutil
 from datetime import datetime
 #from django.http import HttpResponse
 #from django.http import JsonResponse
@@ -62,27 +62,29 @@ def logout_view(request):
     return redirect('home')
 
 
-####for testing if file is reaching view
-#from django.http import HttpResponse
-# def transcribe(request):
-#     if request.method == 'POST':
-#         # Check if a file was uploaded
-#         if 'audio_video_file' in request.FILES:
-#             file = request.FILES['audio_video_file']
-#             # Process the file here (e.g., save it, transcribe it)
-#             return HttpResponse("File received.")
+def history(request):
+    if request.user.is_authenticated:
+        user_instance = UserInfo.objects.get(userid=request.user.userid)
         
-#         # Check if a URL was entered
-#         elif 'url' in request.POST:
-#             url = request.POST['url']
-#             # Process the URL here (e.g., fetch content, transcribe it)
-#             return HttpResponse("URL received.")
+        # Fetch the transcriptions of the authenticated user
+        transcriptions = Transcriptions.objects.filter(userid=user_instance).order_by('-time')
         
-#         else:
-#             return HttpResponse("No file or URL provided.")
-    
-#     else:
-#         return render(request, 'home.html')
+        # Fetch summaries related to these transcriptions
+        summaries = Summaries.objects.filter(transcription__in=transcriptions)
+        
+        # Prepare the data to pass to the template
+        history_data = []
+        for transcription in transcriptions:
+            summary = summaries.filter(transcription=transcription).first()
+            history_data.append({
+                'transcription': transcription,
+                'summary': summary
+            })
+        
+        return render(request, 'talkbrief/history.html', {'history_data': history_data})
+    else:
+        return render(request, 'talkbrief/history.html', {'error': 'You need to be logged in to view your history.'})
+
 
 def transcribe(request):
     if request.method == 'POST':
@@ -140,11 +142,38 @@ def summarize(request):
             text = request.POST['transcription']
         elif 'user_text' in request.POST:
             text = request.POST['user_text']
+        
+            # saving text in db..
+        if request.user.is_authenticated:
+            # Fetch the user instance using the user ID
+            user_instance = UserInfo.objects.get(userid=request.user.userid)        
+        
+            # Save the transcription to the database
+            Transcriptions.objects.create(
+            userid=user_instance,  # Assign the user instance, not just the ID
+            file_name_link='text input',
+            transcription=text,
+            time=datetime.now(),  # Current timestamp
+            )
         else:
-            text = ''            
+            pass
         
         # Retrieve the selected summary length percentage
-        summary_length = request.POST.get('summary_length', '')
+        summary_length = request.POST.get('summary_length', '')        
+         # Extract the summary
+        summary = extract_summary(text, summary_length)
+
+        if text:
+            # Get the last transcription saved in the database
+            last_transcription = Transcriptions.objects.latest('transcription_id')       
+                   
+            # Save the summary to the database
+            Summaries.objects.create(
+                transcription=last_transcription,  # Associate with the latest transcription
+                summary=summary,
+                time=datetime.now(),  # Current timestamp
+            )           
+        
         
         if text:
             summary = extract_summary(text, summary_length)
