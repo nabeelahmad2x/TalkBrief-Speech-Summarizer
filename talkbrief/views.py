@@ -10,7 +10,7 @@ from django.core.files.storage import FileSystemStorage
 from django.conf import settings  # Import settings
 
 from.models import UserInfo, Transcriptions, Summaries
-from.forms import RegisterForm, FileUploadForm
+from.forms import RegisterForm
 
 from talkbrief.talkbrief_mods.text_summarizer import extract_summary
 from talkbrief.talkbrief_mods.audio_transcriber import extract_audio
@@ -18,7 +18,6 @@ from talkbrief.talkbrief_mods.audio_transcriber import extract_audio
 
 
 
-# views..
 def home(request):
     return render(request, 'talkbrief/home.html')
 
@@ -165,7 +164,7 @@ def summarize(request):
         
         # Retrieve the selected summary length percentage
         summary_length = request.POST.get('summary_length', '')      
-        print(summary_length)  
+        
         # Extract the summary
         summary = extract_summary(text, summary_length)
 

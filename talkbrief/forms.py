@@ -60,22 +60,16 @@ class TranscriptionForm(forms.ModelForm):
         model = Transcriptions
         fields = ['file_name_link', 'transcription', 'userid']
 
-# class SummaryForm(forms.ModelForm):
-#     class Meta:
-#         model = Summaries
-#         fields = ['text', 'summary']
 
 class SummaryForm(forms.ModelForm):
     class Meta:
         model = Summaries
         fields = ['transcription', 'summary']
 
-class FileUploadForm(forms.Form):
-    file = forms.FileField()
+# class FileUploadForm(forms.Form):
+#     file = forms.FileField()
 
 
 class MediaForm(forms.Form):
-    # audio_url = forms.URLField(required=False)
-    # file = forms.FileField(required=False)
     audio_video_file = forms.FileField(widget=forms.FileInput(attrs={'accept': 'audio/*,video/*'}))
     url = forms.URLField()
