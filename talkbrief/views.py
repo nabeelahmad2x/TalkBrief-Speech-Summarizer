@@ -28,6 +28,11 @@ def about(request):
 def contact(request):
     return render(request, 'talkbrief/contact.html')
 
+def howto(request):
+     return render(request, 'talkbrief/howto.html')
+
+def whyus(request):
+     return render(request, 'talkbrief/whyus.html')
 
 def register(request):
     if request.method == "POST":
@@ -99,7 +104,7 @@ def transcribe(request):
             filename = fs.save(uploaded_file.name, uploaded_file)
             av_url_or_file = fs.url(filename)
             av_url_or_file = av_url_or_file[1:]
-            # print(av_url_or_file)
+            # print(av_url_or_file)``
 
 
         # calling function in audio_transcriber module to transcrbe the audio/video..
@@ -144,23 +149,24 @@ def summarize(request):
             text = request.POST['user_text']
         
             # saving text in db..
-        if request.user.is_authenticated:
-            # Fetch the user instance using the user ID
-            user_instance = UserInfo.objects.get(userid=request.user.userid)        
+            if request.user.is_authenticated:
+                # Fetch the user instance using the user ID
+                user_instance = UserInfo.objects.get(userid=request.user.userid)        
         
-            # Save the transcription to the database
-            Transcriptions.objects.create(
-            userid=user_instance,  # Assign the user instance, not just the ID
-            file_name_link='text input',
-            transcription=text,
-            time=datetime.now(),  # Current timestamp
-            )
-        else:
-            pass
+              # Save the transcription to the database
+                Transcriptions.objects.create(
+                userid=user_instance,  # Assign the user instance, not just the ID
+                file_name_link='text input',
+                transcription=text,
+                time=datetime.now(),  # Current timestamp
+                )
+            else:
+                pass
         
         # Retrieve the selected summary length percentage
-        summary_length = request.POST.get('summary_length', '')        
-         # Extract the summary
+        summary_length = request.POST.get('summary_length', '')      
+        print(summary_length)  
+        # Extract the summary
         summary = extract_summary(text, summary_length)
 
         if text:
@@ -176,9 +182,9 @@ def summarize(request):
         
         
         if text:
-            summary = extract_summary(text, summary_length)
+           
             return render(request, 'talkbrief/summarize.html', {'summary': summary})
         else:
             return render(request, 'talkbrief/summarize.html', {'error': 'No text provided.'})
     else:
-        return render(request, 'talkbrief/transcribe.html')     
+        return render(request, 'talkbrief/home.html')     

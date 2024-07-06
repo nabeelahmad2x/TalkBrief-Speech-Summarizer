@@ -1,0 +1,121 @@
+{% extends "talkbrief/base.html" %}
+
+{% block title %}About Us{% endblock %}
+
+{% block content %}
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+    body {
+        background: #121212;
+        color: #fff;
+    }
+
+    .container {
+        background: #1e1e1e;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        margin-top: 20px;
+    }
+
+    h1, h2, h3, h4 {
+        color: rgb(93, 93, 255);
+    }
+
+    p {
+        color: #ccc;
+    }
+
+    .organization-image {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto 20px auto;
+        border-radius: 10px;
+    }
+
+    .carousel-item {
+        text-align: center;
+    }
+</style>
+
+<body>
+    <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="4"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="5"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="6"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="7"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <section id="organization-info" class="container">
+                    <h2 style="margin-left: 50px;">Here, you can see how to use the tool successfully!</h2>
+                    <h3>1. You can start by signing up (or login if already have an account).</h3>
+                    {% load static %}
+                    <img src="{% static 'talkbrief/images/HowToLogin1.png' %}" alt="Image of UCP" class="organization-image">
+                </section>
+            </div>
+            <div class="carousel-item">
+                <section id="organization-info" class="container">
+                    <h3>2. If you want to upload audio/video for transcription.</h3>
+                    {% load static %}
+                    <img src="{% static 'talkbrief/images/HowToUploadFile2.png' %}" alt="Image of UCP" class="organization-image">
+                </section>
+            </div>
+            <div class="carousel-item">
+                <section id="organization-info" class="container">
+                    <h3>Or you can paste URL to the file.</h3>
+                    {% load static %}
+                    <img src="{% static 'talkbrief/images/HowToURL3.png' %}" alt="Image of UCP" class="organization-image">
+                </section>
+            </div>
+            <div class="carousel-item">
+                <section id="organization-info" class="container">
+                    <h3>Or if you want to summarize text.</h3>
+                    {% load static %}
+                    <img src="{% static 'talkbrief/images/HowToText4.png' %}" alt="Image of UCP" class="organization-image">
+                </section>
+            </div>
+            <div class="carousel-item">
+                <section id="organization-info" class="container">
+                    <h3>3. Once your file is transcribed, you can copy text + summarize the text.</h3>
+                    {% load static %}
+                    <img src="{% static 'talkbrief/images/HowToSummary5.png' %}" alt="Image of UCP" class="organization-image">
+                </section>
+            </div>
+            <div class="carousel-item">
+                <section id="organization-info" class="container">
+                    <h3>4. Read or Copy the summarized text by just click of a button.</h3>
+                    {% load static %}
+                    <img src="{% static 'talkbrief/images/HowToEnd6.png' %}" alt="Image of UCP" class="organization-image">
+                </section>
+            </div>
+            <div class="carousel-item">
+                <section id="organization-info" class="container">
+                    <h3>Bonus: You can also view past transcriptions and summaries by clicking on your username -> See History.</h3>
+                    {% load static %}
+                    <img src="{% static 'talkbrief/images/HowToHistory7.png' %}" alt="Image of UCP" class="organization-image">
+                </section>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+    <!-- Include Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+{% endblock %}

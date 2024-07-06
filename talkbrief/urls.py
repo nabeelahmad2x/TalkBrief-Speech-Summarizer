@@ -14,6 +14,8 @@ urlpatterns = [
     path('transcribe/', views.transcribe, name='transcribe'),
     path('summarize/', views.summarize, name='summarize'),
     path('history/' , views.history, name='history'),
+    path('howto/' , views.howto, name='howto'),
+    path('whyus/' , views.whyus, name='whyus'),
 ] 
 
 if settings.DEBUG:

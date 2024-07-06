@@ -60,12 +60,12 @@
             <div class="row mb-4">
                 <div class="col-md-6 mb-4">
                     <div class="bg-dark p-4 rounded">
-                        <h2>Transcription</h2>
-                        {% if item.transcription.transcription|length > 150 %}
+                        <h2>Transcription:</h2>
+                        {% if item.transcription.transcription|length > 100 %}
                             <div id="transcriptionContent{{ forloop.counter }}">
                                 <p>
                                     {% autoescape off %}
-                                    {{ item.transcription.transcription|safe|truncatechars_html:150 }}
+                                    {{ item.transcription.transcription|safe|truncatechars_html:100 }}
                                     {% endautoescape %}
                                 </p>
                                 <div class="collapse" id="transcriptionCollapse{{ forloop.counter }}">
@@ -78,19 +78,18 @@
                         {% else %}
                             <p>{{ item.transcription.transcription }}</p>
                         {% endif %}
-                        <br>
                         <p>Uploaded on: {{ item.transcription.time }}</p>
                     </div>
                 </div>
                 
                 <div class="col-md-6 mb-4">
                     <div class="bg-dark p-4 rounded">
-                        <h2>Summary</h2>
-                        {% if item.summary.summary|length > 150 %}
+                        <h2>Summary:</h2>
+                        {% if item.summary.summary|length > 100 %}
                             <div id="summaryContent{{ forloop.counter }}">
                                 <p>
                                     {% autoescape off %}
-                                    {{ item.summary.summary|safe|truncatechars_html:150 }}
+                                    {{ item.summary.summary|safe|truncatechars_html:100 }}
                                     {% endautoescape %}
                                 </p>
                                 <div class="collapse" id="summaryCollapse{{ forloop.counter }}">
@@ -103,7 +102,6 @@
                         {% else %}
                             <p>{{ item.summary.summary }}</p>
                         {% endif %}
-                        <br>
                         <p>Summarized on: {{ item.summary.time }}</p>
                     </div>
                 </div>
