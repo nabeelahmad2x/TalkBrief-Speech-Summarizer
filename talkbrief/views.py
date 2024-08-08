@@ -103,7 +103,7 @@ def transcribe(request):
             filename = fs.save(uploaded_file.name, uploaded_file)
             av_url_or_file = fs.url(filename)
             av_url_or_file = av_url_or_file[1:]
-            # print(av_url_or_file)``
+            # print(av_url_or_file)
 
 
         # calling function in audio_transcriber module to transcrbe the audio/video..

@@ -3,12 +3,6 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseU
 #from django.contrib.auth.models import User
 #from django_guest_user.models import GuestUser
 
-# class UserInfo(models.Model):
-#     userid = models.AutoField(primary_key=True)
-#     username = models.CharField(max_length=30)
-#     email = models.CharField(max_length=255)
-#     password = models.CharField(max_length=255)
-
 # Custom user manager
 class CustomUserManager(BaseUserManager):
     def create_user(self, username, email, password=None, **extra_fields):
